@@ -1,6 +1,6 @@
 # Search & Rescue Robot Project
 
-## <span style="color:red">Texte en rouge</span>
+## Overview
 
 Inspired by the [Bujold robot](https://content.fortune.com/wp-content/uploads/2015/03/bujold.jpg), which was notably deployed in the aftermath of the September 11 attacks in 2001, this project aims to design and build an autonomous search and rescue robot. The objective is to create a robot capable of navigating complex terrains, identifying obstacles and hazards, and providing real-time data to rescue teams.
 
