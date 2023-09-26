@@ -1,4 +1,3 @@
-
 # Search & Rescue Robot Project
 
 ## Overview
@@ -14,6 +13,6 @@ Inspired by the Bujold robot, which was notably deployed in the aftermath of the
 
 ## Technologies Used
 
-* **Mechanical Design** : CAD Software (e.g., Fusion 36à, Oneshape)
+* **Mechanical Design** : CAD Software (e.g., Fusion 360, Oneshape)
 * **Electronics** : Arduino and NVIDIA Jetson
 * **Software** : Python, C/C++
