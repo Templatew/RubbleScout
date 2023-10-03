@@ -1,4 +1,4 @@
-# Search & Rescue Robot Project
+# Search & Rescue Robot Project (ResQBot)
 
 ## Overview
 
