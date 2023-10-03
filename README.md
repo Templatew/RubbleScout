@@ -7,7 +7,7 @@ Inspired by the [Bujold robot](https://content.fortune.com/wp-content/uploads/20
 ## Features
 
 * **Autonomous Navigation** : Utilizes sensors and machine learning algorithms for navigating through unknown terrains.
-* **Obstacle Detection** : Equipped with cameras and LIDAR for obstacle avoidance.
+* **Obstacle Detection** : Equipped with cameras and LIDAR (Light Detection and Ranging) for obstacle avoidance.
 * **Communication Interface** : Real-time data transmission to a central control station.
 * **Hazard Detection** : Sensors for identifying hazardous materials or conditions.
 
