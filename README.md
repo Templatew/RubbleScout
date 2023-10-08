@@ -1,4 +1,4 @@
-# RubbleScout: ##*Navigating Chaos, Saving Lives*
+<h1>RubbleScout <small><i>Navigating Chaos, Saving Lives</i></small></h1>
 
 ## Overview
 
