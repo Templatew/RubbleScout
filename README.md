@@ -1,4 +1,4 @@
-# RubbleScout, Navigating Chaos, Saving Lives
+# RubbleScout, *Navigating Chaos, Saving Lives*
 
 ## Overview
 
