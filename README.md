@@ -1,4 +1,5 @@
-# Search & Rescue Robot Project (ResQBot)
+# RubbleScout, 
+  "Navigating Chaos, Saving Lives"
 
 ## Overview
 
