@@ -1,4 +1,5 @@
-<h1>RubbleScout <small><i>Navigating Chaos, Saving Lives</i></small></h1>
+<h1>RubbleScout <small style="opacity: 0.6;"><i>Navigating Chaos, Saving Lives</i></small></h1>
+
 
 ## Overview
 
