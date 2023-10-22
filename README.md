@@ -15,6 +15,6 @@ We're in the design phase of the RubbleScout robot. The goal? To create a robot 
 ## Literature Review
 Before diving into the design, we wanted to stand on the shoulders of giants. That meant going deep into the existing literature, understanding the challenges, and identifying opportunities. Want to know what we found?
 
-* Check out our detailed Literature Review here
+* [Check out our detailed Literature Review here](./docs/Literature-Review-for-RubbleScout.pdf)
 
 
