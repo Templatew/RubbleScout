@@ -3,14 +3,15 @@
 
 ## Overview
 
-Inspired by the [Bujold robot](https://content.fortune.com/wp-content/uploads/2015/03/bujold.jpg), which was notably deployed in the aftermath of the September 11 attacks in 2001, this project aims to design and build an autonomous search and rescue robot. The objective is to create a robot capable of navigating complex terrains, identifying obstacles and hazards, and providing real-time data to rescue teams.
+The primary objective of this project is to design and prototype a robot that can navigate diverse terrains, aiding in search and rescue missions. This repo serves as a central hub for all project-related resources.
 
 ## Features
 
 * **Autonomous Navigation** : Utilizes sensors and machine learning algorithms for navigating through unknown terrains.
-* **Obstacle Detection** : Equipped with cameras and LIDAR (Light Detection and Ranging) for obstacle avoidance.
+* **Obstacle Detection** : Equipped with cameras and LIDAR (Light Detection and Ranging) for obstacle avoidance and 3D scanning.
 * **Communication Interface** : Real-time data transmission to a central control station.
-* **Hazard Detection** : Sensors for identifying hazardous materials or conditions.
+* **Hazard Detection** : Sensors for identifying hazardous substances or conditions.
 
-## About Me
-My name is Lorenz, a first-year Robotics Engineering student based in Antibes, France. This project is part of my academic curriculum and is driven by a passion for robotics and its applications in emergency response scenarios.
+
+
+
