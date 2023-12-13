@@ -1,31 +1,27 @@
+# Weekly Report N°2 for RubbleScout Project
+School year 2023-2024
 
+## Project Overview
+- **Title:** RubbleScout
+- **Tagline:** "Navigating Chaos Saving Lives"
+- **Student:** Lorenz CAZAUBON
+- **Supervisor:** Pascal MASSON
+- **Institution:** Ecole Polytechnique Universitaire de Nice Sophia-Antipolis, Robotics Specialty (Autonomous Systems)
+- **Location:** 930 route des Colles, 06410 BIOT France
 
-**Project Report: Session 4**
+## Session Highlights
+- Examined the circuit powering the lamp in more detail.
+- Identified inability to vary lamp brightness using PWM; lack of information on certain electronic components.
+- Temporary solution: Using a relay circuit for on/off functionality without variable brightness.
+- Encountered challenges with PWM solution; no progress on lidar.
+- Designed a circuit to control lidar movements.
 
-**Date:** 12/12/2023
-**Duration:** 4 hours
+## Next Steps
+- Plan to complete 3D drawings of lidar motion controller using CAD software.
+- Anticipate printing parts in the next session and testing them.
+- Hope to receive the robot chassis for starting basic mechanics work.
 
-**Objective:** The primary focus of this session was to make progress in the physical modeling and initial assembly aspects of the RubbleScout project.
-
-**Activities Undertaken:**
-
-1. **3D Modeling and Laser Cutting:**
-   - Developed a 3D model of specific components for the robot.
-   - Utilized laser cutting on plywood (CP) for creating precise parts. This process was essential for ensuring components fit accurately with the aluminum chassis.
-
-2. **Selection of Fasteners:**
-   - Decided on the types of screws and bolts needed for mounting the electronic boards beneath the aluminum chassis. This step was crucial to ensure secure and stable assembly of the electronic components.
-
-3. **Collaborative Brainstorming:**
-   - Engaged in productive discussions with fellow students regarding the layout and design of various parts.
-   - Focused on the design of protective casings and the potential assembly methods. The goal here was to encapsulate all components within the robot, thereby avoiding any exposed parts for enhanced durability and safety.
-
-4. **Design Considerations:**
-   - Contemplated the best approaches for assembling the casings and internal components. This involved balancing accessibility, protection, and space optimization within the robot's chassis.
-
-**Reflections and Next Steps:**
-
-This session, while seemingly less hands-on, was vital for the project's development. The time spent in contemplation and discussion has laid the groundwork for more informed and efficient assembly decisions in the future.
-
-Moving forward, the next steps will involve finalizing the designs of the casings and beginning the assembly process, ensuring that all components are well-protected and securely housed within the robot's structure.
-
+## References
+- [Video of electronic assembly (Fig 2)](link)
+- [PDF file of circuit diagram (Fig 2)](link)
+- [SVG file of lidar control circuit (Fig 3)](link)
