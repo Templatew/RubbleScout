@@ -11,7 +11,7 @@ School year 2023-2024
 
 ## Session Activities
 - **Lamp Circuit Examination:**
-  - Detailed review of the circuit powering the lamp.
+  - Detailed review of the circuit powering the lamp. ![Circuit SVG](https://github.com/Templatew/RubbleScout/blob/main/Docs/Weekly%20Reports/Weekly%20Report%20N%C2%B02%20For%20RubbleScout%20Project/Flood-Lamp-Controller-for-RubbleScout.svg)
   - Identified the inability to vary lamp brightness using PWM due to unknown electronic components.
   - Implemented a relay circuit for on/off functionality without variable brightness.
 
