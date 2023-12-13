@@ -27,7 +27,7 @@ Our journey began with a deep dive into the existing literature, where we explor
 
 Curious about our journey so far? Our weekly progress reports provide a detailed account of our development process, challenges encountered, and breakthroughs.
 
-* [Access our weekly progress reports here](./docs/Weekly-Progress-Reports.pdf)
+* [Access our weekly progress reports here](https://github.com/Templatew/RubbleScout/tree/main/Docs/Weekly%20Reports)
 
 ## Stay Tuned
 
