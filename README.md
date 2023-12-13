@@ -21,7 +21,7 @@ At this stage, RubbleScout is taking shape both in theory and in practice. Our g
 
 Our journey began with a deep dive into the existing literature, where we explored the nuances of robotic design, particularly in the context of search and rescue operations.
 
-* [Explore our comprehensive Literature Review here](./docs/Litrature-Review/Literature-Review-for-RubbleScout.pdf)
+* [Explore our comprehensive Literature Review here](./Docs/Litrature-Review/Literature-Review-for-RubbleScout.pdf)
 
 ## Progress Reports
 
