@@ -25,8 +25,8 @@ School year 2023-2024
 - **Lidar Module Development:**
   - Started modeling the main part of the Lidar module for 3D printing.
   - Planning to integrate this technology into the project.
-  ```stl
-  solid STLB ATF 12.14.0.127 COLOR=                                                      
+```stl
+solid STLB ATF 12.14.0.127 COLOR=                                                      
   facet normal -0.9034254550933838 -0.42874521017074585 0
     outer loop
       vertex -9.447736740112305 16.061153411865234 0
@@ -12433,7 +12433,7 @@ School year 2023-2024
   endfacet
 endsolid STLB ATF 12.14.0.127 COLOR=                                                      
 
-  ```
+```
 
 ## Next Steps
 - Focusing on further experimentation in the next session.
