@@ -17,7 +17,7 @@ The primary focus of this session was to make progress in the physical modeling 
    - Developed a 3D model of specific components for the robot.
    - Utilized laser cutting on plywood for creating precise parts. This process was essential for ensuring components fit accurately with the aluminum chassis.
    ```stl
-   solid STLB ATF 12.14.0.127 COLOR=                                                      
+      solid STLB ATF 12.14.0.127 COLOR=                                                      
   facet normal 0.11196447908878326 0.9937121868133545 0
     outer loop
       vertex -25 -15 3
@@ -15951,6 +15951,7 @@ The primary focus of this session was to make progress in the physical modeling 
     endloop
   endfacet
 endsolid STLB ATF 12.14.0.127 COLOR=                                                      
+                                               
    ```
 
 2. **Selection of Fasteners**
