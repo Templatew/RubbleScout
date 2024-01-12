@@ -1,4 +1,4 @@
-![DALL·E 2024-01-13 00 28 32 - A minimalistic logo featuring a small robot with a tracked chassis, suitable for a project named RubbleScout  The robot should be stylized and simple,](https://github.com/Templatew/RubbleScout/assets/96289463/78a19e4e-31b0-42a9-b263-804721911812)
+![e](https://github.com/Templatew/RubbleScout/assets/96289463/78a19e4e-31b0-42a9-b263-804721911812)
 
 
 
