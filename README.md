@@ -1,4 +1,5 @@
-![h](https://github.com/Templatew/RubbleScout/assets/96289463/5378566f-e17a-4096-9b77-d03bc5c692b2)
+![DALL·E 2024-01-13 00 28 32 - A minimalistic logo featuring a small robot with a tracked chassis, suitable for a project named RubbleScout  The robot should be stylized and simple,](https://github.com/Templatew/RubbleScout/assets/96289463/78a19e4e-31b0-42a9-b263-804721911812)
+
 
 
 # RubbleScout: *"Navigating Chaos, Saving Lives"*
