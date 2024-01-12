@@ -1,3 +1,6 @@
+![h](https://github.com/Templatew/RubbleScout/assets/96289463/5378566f-e17a-4096-9b77-d03bc5c692b2)
+
+
 # RubbleScout: *"Navigating Chaos, Saving Lives"*
 
 ## Welcome to the Future of Search and Rescue
