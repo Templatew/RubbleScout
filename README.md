@@ -39,4 +39,5 @@ We're constantly updating this space with our latest developments. Keep an eye o
 
 ## Gallery
 
-![image](https://github.com/Templatew/RubbleScout/assets/96289463/d10fe53a-873a-4000-bfe3-ab380fa5f806)
+![726d8f80-8cb1-425c-9487-5b665a6f1996](https://github.com/Templatew/RubbleScout/assets/96289463/5b54b5ab-cc97-4ce1-b4cd-7bcb3bf183dc)
+
