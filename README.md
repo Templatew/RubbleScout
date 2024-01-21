@@ -36,3 +36,7 @@ Curious about our journey so far? Our weekly progress reports provide a detailed
 ## Stay Tuned
 
 We're constantly updating this space with our latest developments. Keep an eye on this repo for more updates, and feel free to reach out if you have questions or suggestions.
+
+## Gallery
+
+![image](https://github.com/Templatew/RubbleScout/assets/96289463/d10fe53a-873a-4000-bfe3-ab380fa5f806)
