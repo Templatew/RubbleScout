@@ -2,20 +2,19 @@
 #include <fstream>
 #include <cmath>
 
-// Paramètres de la sphère
-const double radius = 100; // Rayon de la sphère
-const int numPoints = 10000; // Nombre de points à générer
+const double radius = 100;
+const int numPoints = 10000;
 
 int main() {
     std::ofstream file("sphere_points.txt");
 
     if (!file.is_open()) {
-        std::cerr << "Erreur lors de l'ouverture du fichier." << std::endl;
+        std::cerr << "Could not open file." << std::endl;
         return 1;
     }
 
     for (int i = 0; i < numPoints; ++i) {
-        // Générer des points aléatoires sur la sphère
+
         double phi = acos(1 - 2 * double(rand()) / RAND_MAX);
         double theta = 2 * M_PI * double(rand()) / RAND_MAX;
 
