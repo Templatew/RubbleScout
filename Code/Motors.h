@@ -16,3 +16,22 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
     Date : 01-2024
     Version : N/A
 */
+
+#ifndef Motors_h
+#define Motors_h
+
+class Motors {
+
+    public :
+
+        Motors();
+
+    private :
+
+        void init();
+};
+
+
+
+
+#endif
