@@ -1,80 +1,54 @@
-#include<SoftwareSerial.h>
+/*
+____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________________________/\\\\\\\\\\\_______________________________________________________________        
+ __/\\\///////\\\___________________\/\\\_________\/\\\_________\////\\\_______________________/\\\/////////\\\_____________________________________________________________       
+  _\/\\\_____\/\\\___________________\/\\\_________\/\\\____________\/\\\______________________\//\\\______\///____________________________________________________/\\\______      
+   _\/\\\\\\\\\\\/______/\\\____/\\\__\/\\\_________\/\\\____________\/\\\_________/\\\\\\\\_____\////\\\______________/\\\\\\\\______/\\\\\______/\\\____/\\\___/\\\\\\\\\\\_     
+    _\/\\\//////\\\_____\/\\\___\/\\\__\/\\\\\\\\\___\/\\\\\\\\\______\/\\\_______/\\\/////\\\_______\////\\\_________/\\\//////_____/\\\///\\\___\/\\\___\/\\\__\////\\\////__    
+     _\/\\\____\//\\\____\/\\\___\/\\\__\/\\\////\\\__\/\\\////\\\_____\/\\\______/\\\\\\\\\\\___________\////\\\_____/\\\___________/\\\__\//\\\__\/\\\___\/\\\_____\/\\\______   
+      _\/\\\_____\//\\\___\/\\\___\/\\\__\/\\\__\/\\\__\/\\\__\/\\\_____\/\\\_____\//\\///////_____/\\\______\//\\\___\//\\\_________\//\\\__/\\\___\/\\\___\/\\\_____\/\\\_/\\__  
+       _\/\\\______\//\\\__\//\\\\\\\\\___\/\\\\\\\\\___\/\\\\\\\\\____/\\\\\\\\\___\//\\\\\\\\\\__\///\\\\\\\\\\\/_____\///\\\\\\\\___\///\\\\\/____\//\\\\\\\\\______\//\\\\\___ 
+        _\///________\///____\/////////____\/////////____\/////////____\/////////_____\//////////_____\///////////_________\////////______\/////_______\/////////________\/////____
+*/  
 
-#define DIR1 7
-#define PW1 6
-#define DIR2 4
-#define PW2 5
+/*  
+    Author : https://github.com/Templatew
+    Date : 01-2024
+*/
 
 
-#define RX 11
-#define TX 10
-SoftwareSerial BlueT(RX,TX);
-char Data;
+// Pins
+const int DIR1 = 7;
+const int PW1 = 6;
+const int DIR2 = 4;
+const int PW2 = 5;
+
+void motors_setup() {
+
+    // Set up motors
+    pinMode(DIR1,OUTPUT);
+    pinMode(DIR2,OUTPUT);
+}
 
 void move(int speed_left, int speed_right) {
 
-  // Set right motor direction based on speed
-  if (speed_right < 0) {
-    digitalWrite(DIR1, HIGH);
-  } 
-  else {
-    digitalWrite(DIR1, LOW);
-  }
-
-  // Set left motor direction based on speed
-  if (speed_left < 0) {
-    digitalWrite(DIR2, HIGH);
-  } 
-  else {
-    digitalWrite(DIR2, LOW);
-  }
-
-  // Set motor speeds
-  analogWrite(PW1, abs(speed_right));
-  analogWrite(PW2, abs(speed_left));
-}
-
-void setup() {
-
-  Serial.begin(9600);
-  pinMode(DIR1,OUTPUT);
-  pinMode(DIR2,OUTPUT);
-
-  digitalWrite(DIR1,LOW);
-  digitalWrite(DIR2,LOW);
-
-  //BT
-  BlueT.begin(9600);
-
-}
-
-void loop(){
-  if (BlueT.available()){
-    
-    Data=BlueT.read();
-
-    switch(Data) {
-
-      case 'F':
-        move(255, 255);
-        break;
-      
-      case 'B':
-        move(-255, -255);
-        break;
-
-      case 'L':
-        move(-255, 255);
-        break;
-
-      case 'R':
-        move(255, -255);
-        break;
-
-      case 'S':
-        move(0, 0);
-        break;
+    // Set right motor direction based on speed
+    if (speed_right < 0) {
+        digitalWrite(DIR1, HIGH);
+    } 
+    else {
+        digitalWrite(DIR1, LOW);
     }
-  }
-}
 
+    // Set left motor direction based on speed
+    if (speed_left < 0) {
+        digitalWrite(DIR2, HIGH);
+    } 
+    else {
+        digitalWrite(DIR2, LOW);
+    }
+
+    // Set motor speeds
+    analogWrite(PW1, abs(speed_right));
+    analogWrite(PW2, abs(speed_left));
+
+}

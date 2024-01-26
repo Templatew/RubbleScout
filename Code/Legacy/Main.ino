@@ -11,7 +11,6 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 */  
 
 /*  
-
     Author : https://github.com/Templatew
     Date : 01-2024
     Version : N/A
@@ -22,12 +21,60 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
         * It will also be used to set up the robot and the sensors.
 */
 
-// #include <Arduino.h>
-#include motors.h
 
 void setup() {
+
+    // Set up motors
+    motors_setup();
+
+    // Set up bluetooth
+    bluetooth_setup();
+
+    // Set up serial
+    Serial.begin(9600);
 }
 
-void loop(){
+void loop() {
+
+    // Get bluetooth data
+    char data = bluetooth_get_data();
+
+    // Do action according to bluetooth command
+    switch(data) {
+
+        case 'F':
+            move(255, 255);
+            break;
+
+        case 'B':
+            move(-255, -255);
+            break;
+
+        case 'L':
+            move(-255, 255);
+            break;
+
+        case 'R':
+            move(255, -255);
+            break;
+
+        case 'S':
+            move(0, 0);
+            break;
+
+        case 'L':
+
+            scan()
+            break;
+            
+        default:
+            break;
+    }
+
+    // Get sensor data
+
+    // Send sensor data
+
 }
+
 

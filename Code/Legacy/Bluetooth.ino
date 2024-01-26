@@ -11,8 +11,25 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 */  
 
 /*  
-
     Author : https://github.com/Templatew
     Date : 01-2024
-    Version : N/A
 */
+
+#include <SoftwareSerial.h>
+
+const int RX = 11;
+const int TX = 10;
+SoftwareSerial BlueT(RX,TX);
+
+void bluetooth_setup() {
+
+    // Set up bluetooth
+    BlueT.begin(9600);
+}
+
+char bluetooth_get_data() {
+
+    if (BlueT.available()) {
+        return BlueT.read();
+    }
+}

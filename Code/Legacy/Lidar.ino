@@ -11,27 +11,11 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 */  
 
 /*  
-
     Author : https://github.com/Templatew
     Date : 01-2024
-    Version : N/A
 */
 
-#ifndef Motors_h
-#define Motors_h
+void scan(){
+    // fghjk
+}
 
-class Motors {
-
-    public :
-
-        Motors();
-
-    private :
-
-        void init();
-};
-
-
-
-
-#endif
