@@ -42,6 +42,6 @@ class ServoMotor {
 
         static const int _SERVO_PIN = 9;
 
-}
+};
 
 #endif

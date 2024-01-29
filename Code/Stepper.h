@@ -40,6 +40,6 @@ class Stepper {
     static const int _DELAY_STEPPER_MOTOR = 500; // ms between each step, if not working try 4ms
     
 
-}
+};
 
 #endif
