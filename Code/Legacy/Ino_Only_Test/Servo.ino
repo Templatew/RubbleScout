@@ -43,4 +43,4 @@ void setup_servo(){
 void move_servo_to(int microseconds){
 
     servo_lidar.writeMicroseconds(microseconds);
-}
+} 
