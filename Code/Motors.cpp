@@ -14,29 +14,41 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
     Author : https://github.com/Templatew
     Date : 01-2024
 */
- 
-#ifndef Motors_h
-#define Motors_h
 
-class Motors {
+#include <Arduino.h>
+#include "Motors.h"
 
-    public :
+Motors::Motors() {
 
-        Motors();
+    // Set pins as outputs
+    pinMode(_DIR1, OUTPUT);
+    pinMode(_DIR2, OUTPUT);
 
-        void move(int speed_left, int speed_right);
+    //Force Stop
+    analogWrite(_PW1, 0);
+    analogWrite(_PW2, 0);
+}
 
-    private :
+void Motors::move(int speed_left, int speed_right) {
 
-        // Pins
-        static const int DIR1 = 7;
-        static const int PW1 = 6;
-        static const int DIR2 = 4;
-        static const int PW2 = 5;
+    // Set right motor direction based on speed
+    if (speed_right < 0) {
+        digitalWrite(_DIR1, HIGH);
+    } 
+    else {
+        digitalWrite(_DIR1, LOW);
+    }
 
-};
+    // Set left motor direction based on speed
+    if (speed_left < 0) {
+        digitalWrite(_DIR2, HIGH);
+    } 
+    else {
+        digitalWrite(_DIR2, LOW);
+    }
 
+    // Set motor speeds
+    analogWrite(_PW1, abs(speed_right));
+    analogWrite(_PW2, abs(speed_left));
 
-
-
-#endif
+}

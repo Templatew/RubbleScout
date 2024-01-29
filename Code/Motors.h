@@ -13,65 +13,27 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 /*  
     Author : https://github.com/Templatew
     Date : 01-2024
-    Version : N/A
-
-    Description :
-
-        * This is the main file for the robot. It will be used to call all the other files and functions.
-        * It will also be used to set up the robot and the sensors.
 */
+ 
+#ifndef Motors_h
+#define Motors_h
 
-#include "Motors.h"
-#include "Bluetooth.h"
+class Motors {
 
-void setup() {
+    public :
 
-    // Set up motors
-    Motors motors;
+        Motors();
 
-    // Set up bluetooth
-    // Bluetooth bluetooth;
+        void move(int speed_left, int speed_right);
 
-    // Set up sensors
+    private :
 
-    // Set up serial
-    Serial.begin(9600);
-}
+        // Pins
+        static const int _DIR1 = 7;
+        static const int _PW1 = 6;
+        static const int _DIR2 = 4;
+        static const int _PW2 = 5;
 
-void loop() {
+};
 
-    // Get bluetooth data
-    // char data = bluetooth.get_data();
-
-    // Move motors
-    // switch(data) {
-
-    //     case 'F':
-    //         motors.move(255, 255);
-    //         break;
-
-    //     case 'B':
-    //         motors.move(-255, -255);
-    //         break;
-
-    //     case 'L':
-    //         motors.move(-255, 255);
-    //         break;
-
-    //     case 'R':
-    //         motors.move(255, -255);
-    //         break;
-
-    //     case 'S':
-    //         motors.move(0, 0);
-    //         break;
-
-    // }
-
-    // Get sensor data
-
-    // Send sensor data
-
-}
-
-
+#endif

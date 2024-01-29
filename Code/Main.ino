@@ -8,32 +8,70 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
       _\/\\\_____\//\\\___\/\\\___\/\\\__\/\\\__\/\\\__\/\\\__\/\\\_____\/\\\_____\//\\///////_____/\\\______\//\\\___\//\\\_________\//\\\__/\\\___\/\\\___\/\\\_____\/\\\_/\\__  
        _\/\\\______\//\\\__\//\\\\\\\\\___\/\\\\\\\\\___\/\\\\\\\\\____/\\\\\\\\\___\//\\\\\\\\\\__\///\\\\\\\\\\\/_____\///\\\\\\\\___\///\\\\\/____\//\\\\\\\\\______\//\\\\\___ 
         _\///________\///____\/////////____\/////////____\/////////____\/////////_____\//////////_____\///////////_________\////////______\/////_______\/////////________\/////____
-*/   
+*/  
 
 /*  
     Author : https://github.com/Templatew
     Date : 01-2024
+    Version : N/A
+
+    Description :
+
+        * This is the main file for the robot. It will be used to call all the other files and functions.
+        * It will also be used to set up the robot and the sensors.
 */
 
-// Pins
-const int IR_PIN = 2;
+#include "Motors.h"
+#include "Bluetooth.h"
 
-// Variables
-const int IR_THRESHOLD = 100;
+void setup() {
 
-// Functions
+    // Set up motors
+    Motors motors;
 
-// Function to setup IR sensor 
-void setup_IR_sensor(){
-    pinMode(IR_PIN, INPUT);
+    // Set up bluetooth
+    Bluetooth bluetooth;
+
+    // Set up Lidar
+    Lidar lidar;
+
+    // Set up Ir Sensor
+    IrSensor irSensor;
+
+    // Set up Servo
+    Servo servo;
+
+    // Set up serial
+    Serial.begin(9600);
 }
 
-// Function to read IR sensor
-int read_IR_sensor(){
-    return analogRead(IR_PIN);
+void loop() {
+
+    char data = bluetooth.get_data();
+
+    switch(data) {
+
+        case 'F':
+            motors.move(255, 255);
+            break;
+
+        case 'B':
+            motors.move(-255, -255);
+            break;
+
+        case 'L':
+            motors.move(-255, 255);
+            break;
+
+        case 'R':
+            motors.move(255, -255);
+            break;
+
+        case 'S':
+            motors.move(0, 0);
+            break;
+
+    }
 }
 
-// Function to check if IR sensor is triggered
-bool is_IR_triggered(){
-    return read_IR_sensor() < IR_THRESHOLD;
-}
+

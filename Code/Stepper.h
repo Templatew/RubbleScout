@@ -8,32 +8,38 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
       _\/\\\_____\//\\\___\/\\\___\/\\\__\/\\\__\/\\\__\/\\\__\/\\\_____\/\\\_____\//\\///////_____/\\\______\//\\\___\//\\\_________\//\\\__/\\\___\/\\\___\/\\\_____\/\\\_/\\__  
        _\/\\\______\//\\\__\//\\\\\\\\\___\/\\\\\\\\\___\/\\\\\\\\\____/\\\\\\\\\___\//\\\\\\\\\\__\///\\\\\\\\\\\/_____\///\\\\\\\\___\///\\\\\/____\//\\\\\\\\\______\//\\\\\___ 
         _\///________\///____\/////////____\/////////____\/////////____\/////////_____\//////////_____\///////////_________\////////______\/////_______\/////////________\/////____
-*/   
+*/  
 
 /*  
     Author : https://github.com/Templatew
     Date : 01-2024
 */
 
-// Pins
-const int IR_PIN = 2;
+#ifndef Stepper_h
+#define Stepper_h
 
-// Variables
-const int IR_THRESHOLD = 100;
+class Stepper {
 
-// Functions
+    public :
 
-// Function to setup IR sensor 
-void setup_IR_sensor(){
-    pinMode(IR_PIN, INPUT);
+        Stepper();
+
+        void move_stepper_motor();
+
+        void calibrate_stepper_motor();
+
+        static const int ANGLE_PER_STEP = 1.8 // Angle per step of the stepper motor
+
+    private :
+
+    // Pins
+    static const int _STEPPER_MOTOR = 3;
+    static const int _DIR_STEPPER_MOTOR = 2;
+
+    // Constants
+    static const int _DELAY_STEPPER_MOTOR = 500 // ms between each step, if not working try 4ms
+    
+
 }
 
-// Function to read IR sensor
-int read_IR_sensor(){
-    return analogRead(IR_PIN);
-}
-
-// Function to check if IR sensor is triggered
-bool is_IR_triggered(){
-    return read_IR_sensor() < IR_THRESHOLD;
-}
+#endif

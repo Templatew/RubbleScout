@@ -15,40 +15,23 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
     Date : 01-2024
 */
 
+#include <Arduino.h>
+#include <SoftwareSerial.h>
+#include "Bluetooth.h"
 
-// Pins
-const int DIR1 = 7;
-const int PW1 = 6;
-const int DIR2 = 4;
-const int PW2 = 5;
 
-void motors_setup() {
 
-    // Set up motors
-    pinMode(DIR1,OUTPUT);
-    pinMode(DIR2,OUTPUT);
+Bluetooth::Bluetooth() {
+
+    SoftwareSerial BlueT(_RX,_TX);
+    BlueT.begin(9600);
 }
 
-void move(int speed_left, int speed_right) {
+char Bluetooth::get_data() {
 
-    // Set right motor direction based on speed
-    if (speed_right < 0) {
-        digitalWrite(DIR1, HIGH);
-    } 
-    else {
-        digitalWrite(DIR1, LOW);
+    if (BlueT.available()){
+        Data=BlueT.read();
     }
 
-    // Set left motor direction based on speed
-    if (speed_left < 0) {
-        digitalWrite(DIR2, HIGH);
-    } 
-    else {
-        digitalWrite(DIR2, LOW);
-    }
-
-    // Set motor speeds
-    analogWrite(PW1, abs(speed_right));
-    analogWrite(PW2, abs(speed_left));
-
+    return Data;
 }

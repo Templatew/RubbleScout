@@ -8,32 +8,35 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
       _\/\\\_____\//\\\___\/\\\___\/\\\__\/\\\__\/\\\__\/\\\__\/\\\_____\/\\\_____\//\\///////_____/\\\______\//\\\___\//\\\_________\//\\\__/\\\___\/\\\___\/\\\_____\/\\\_/\\__  
        _\/\\\______\//\\\__\//\\\\\\\\\___\/\\\\\\\\\___\/\\\\\\\\\____/\\\\\\\\\___\//\\\\\\\\\\__\///\\\\\\\\\\\/_____\///\\\\\\\\___\///\\\\\/____\//\\\\\\\\\______\//\\\\\___ 
         _\///________\///____\/////////____\/////////____\/////////____\/////////_____\//////////_____\///////////_________\////////______\/////_______\/////////________\/////____
-*/   
+*/  
 
 /*  
     Author : https://github.com/Templatew
     Date : 01-2024
 */
 
-// Pins
-const int IR_PIN = 2;
+#include "Stepper.h"
+#include <Arduino.h>
 
-// Variables
-const int IR_THRESHOLD = 100;
-
-// Functions
-
-// Function to setup IR sensor 
-void setup_IR_sensor(){
-    pinMode(IR_PIN, INPUT);
+Stepper::Stepper(){
+   
+    pinMode(_STEPPER_MOTOR, OUTPUT);
+    pinMode(_DIR_STEPPER_MOTOR, OUTPUT);
 }
 
-// Function to read IR sensor
-int read_IR_sensor(){
-    return analogRead(IR_PIN);
+// Move the stepper motor by one step
+void Stepper::move_stepper_motor(){
+    
+    digitalWrite(_STEPPER_MOTOR, HIGH);
+    delayMicroseconds(_DELAY_STEPPER_MOTOR);
+    digitalWrite(_STEPPER_MOTOR, LOW);
+    delayMicroseconds(_DELAY_STEPPER_MOTOR);
 }
 
-// Function to check if IR sensor is triggered
-bool is_IR_triggered(){
-    return read_IR_sensor() < IR_THRESHOLD;
+// Calibrate the stepper motor
+void Stepper::calibrate_stepper_motor(){
+    
+    while(!is_Ir_triggered()){
+        move_stepper_motor();
+    }
 }

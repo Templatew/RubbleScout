@@ -15,21 +15,28 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
     Date : 01-2024
 */
 
-#include <SoftwareSerial.h>
+#ifndef Bluetooth_h
+#define Bluetooth_h
 
-const int RX = 11;
-const int TX = 10;
-SoftwareSerial BlueT(RX,TX);
+class Bluetooth {
 
-void bluetooth_setup() {
+    public :
 
-    // Set up bluetooth
-    BlueT.begin(9600);
-}
+        Bluetooth();
 
-char bluetooth_get_data() {
+        char get_data();
 
-    if (BlueT.available()) {
-        return BlueT.read();
-    }
-}
+        //Data
+        char Data;
+
+    private :
+
+        // Pins
+        static const int _RX = 11;
+        static const int _TX = 10;
+
+};
+
+
+
+// #endif

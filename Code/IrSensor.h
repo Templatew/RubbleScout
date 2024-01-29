@@ -13,61 +13,25 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 /*  
     Author : https://github.com/Templatew
     Date : 01-2024
-    Version : N/A
-
-    Description :
-
-        * This is the main file for the robot. It will be used to call all the other files and functions.
-        * It will also be used to set up the robot and the sensors.
 */
 
+#ifndef IrSensor_h
+#define IrSensor_h
 
-void setup() {
+class IrSensor{
 
-    // Set up motors
-    motors_setup();
+    public:
+        
+        IrSensor();
 
-    // Set up bluetooth
-    bluetooth_setup();
+        int read_Ir_sensor();
 
-    // Set up serial
-    Serial.begin(9600);
-}
+        bool is_Ir_triggered();
+    
+    private:
 
-void loop() {
+        static const int _Ir_pin = 2;
+        static const int _Ir_threshold = 100;
+};
 
-    // Get bluetooth data
-    char data = bluetooth_get_data();
-
-    // Move motors
-    switch(data) {
-
-        case 'F':
-            move(255, 255);
-            break;
-
-        case 'B':
-            move(-255, -255);
-            break;
-
-        case 'L':
-            move(-255, 255);
-            break;
-
-        case 'R':
-            move(255, -255);
-            break;
-
-        case 'S':
-            move(0, 0);
-            break;
-
-    }
-
-    // Get sensor data
-
-    // Send sensor data
-
-}
-
-
+#endif
