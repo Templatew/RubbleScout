@@ -22,6 +22,7 @@ const int DIR_STEPPER_MOTOR = 2;
 // Variables
 unsigned long nb_steps = 0; // Number of steps taken by the stepper motor
 const int DELAY_STEPPER = 500 // ms between each step, if not working try 4ms
+const int ANGLE_PER_STEP = 1.8 // Angle per step of the stepper motor
 
 // Functions
 
@@ -30,7 +31,6 @@ void setup_stepper_motor(){
 
     pinMode(STEPPER,OUTPUT);
     pinMode(DIR_STEPPER_MOTOR,OUTPUT);
-    nb_steps = 0; 
 }
 
 // Function to move the stepper motor by one step
@@ -39,5 +39,13 @@ void move_stepper(){
     digitalWrite(STEP,HIGH);
     delay(DELAY_STEPPER);
     digitalWrite(STEP,LOW);
-    nb_steps++;
+}
+
+// Function to calibrate stepper motor
+void calibrate_stepper(){
+
+    while(!is_IR_triggered){
+        // Move stepper motor
+        move_stepper();
+    }
 }

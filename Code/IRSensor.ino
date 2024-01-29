@@ -15,32 +15,25 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
     Date : 01-2024
 */
 
-#include <Servo.h>
-
-Servo servo_lidar;
-
 // Pins
-const int PIN_SERVO = 9;
+const int IR_PIN = 2;
 
 // Variables
-const int ANGLE_MIN = 1000; // -90 degrees
-const int ANGLE_MAX = 2000; // 90 degrees
+const int IR_THRESHOLD = 100;
 
 // Functions
 
-// Function to setup the servo
-void setup_servo(){
-
-    servo.attach(PIN_SERVO, ANGLE_MIN, ANGLE_MAX);
+// Function to setup IR sensor 
+void setup_IR_sensor(){
+    pinMode(IR_PIN, INPUT);
 }
 
-// Function to move the servo to a specific angle (in Microseconds)
-/*
- Position "0" (1.5 ms pulse) is middle, 
- "90" (~2ms pulse) is all the way to the right. 
- "-90" (~1ms pulse) is all the way to the left.
-*/
-void move_servo_to(int microseconds){
+// Function to read IR sensor
+int read_IR_sensor(){
+    return analogRead(IR_PIN);
+}
 
-    servo_lidar.writeMicroseconds(microseconds);
+// Function to check if IR sensor is triggered
+bool is_IR_triggered(){
+    return read_IR_sensor() < IR_THRESHOLD;
 }
