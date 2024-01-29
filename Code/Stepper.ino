@@ -19,36 +19,26 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 const int STEP = 3;
 const int DIR_STEPPER_MOTOR = 2;
 
-const int DELAY_STEPPER = 500 //ms
-const int DELAY_STEPPER_2 = 4 //ms
-
+// Variables
+nb_steps = 0; // Number of steps taken by the stepper motor
+const int DELAY_STEPPER = 500 // ms between each step, if not working try 4ms
 unsigned long stepper_delay = 0;
 
+// Functions
+
+// Function to setup the stepper motor
 void setup_stepper_motor(){
 
     pinMode(STEPPER,OUTPUT);
     pinMode(DIR_STEPPER_MOTOR,OUTPUT);
-    
-
+    nb_steps = 0; 
 }
 
+// Function to move the stepper motor by one step
 void move_stepper(){
 
     digitalWrite(STEP,HIGH);
     delay(DELAY_STEPPER);
     digitalWrite(STEP,LOW);
-
-}
-
-void move_stepper(int nb_steps){
-
-    for (int i = 0; i < nb_steps; i++) {
-
-        digitalWrite(STEP,HIGH);
-        delay(DELAY_STEPPER);
-        digitalWrite(STEP,LOW);
-        // delay(DELAY_STEPPER_2);
-
-    }
-
+    nb_steps++;
 }

@@ -18,17 +18,29 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 #include <Servo.h>
 
 Servo servo_lidar;
+
+// Pins
 const int PIN_SERVO = 9;
+
+// Variables
 const int ANGLE_MIN = 544;
 const int ANGLE_MAX = 2400;
 
+// Functions
+
+// Function to setup the servo
 void setup_servo(){
 
     servo.attach(PIN_SERVO, ANGLE_MIN, ANGLE_MAX);
 }
 
-void move_servo(int angle){
+// Function to move the servo to a specific angle (in Microseconds)
+/*
+ Position "0" (1.5 ms pulse) is middle, 
+ "90" (~2ms pulse) is all the way to the right. 
+ "-90" (~1ms pulse) is all the way to the left.
+*/
+void move_servo_to(int angle){
 
     servo_lidar.writeMicroseconds(angle);
-
 }
