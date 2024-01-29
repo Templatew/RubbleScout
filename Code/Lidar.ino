@@ -80,16 +80,16 @@ void scan(){
     
     calibrate_stepper();
 
-    unsigned long int distance = 0;
-    double phi = 0;
-    int theta = 0;
-    int steps_to_make_a_full_turn = (360 / ANGLE_PER_STEP);
-    double x = 0;
-    double y = 0;
+    unsigned long int distance = 0; // Distance in cm
+    double phi = 0; // Angle in degrees
+    int theta = 0; // Angle in microseconds
+    int steps_to_make_a_full_turn = (360 / ANGLE_PER_STEP); // Number of steps to make a full turn
+    
+    // Cartesian coordinates
+    double x = 0; 
+    double y = 0; 
     double z = 0;
     std::array<double, 3> cartesian = {0, 0, 0};
-
-
 
     for (int i = ANGLE_MIN; i < ANGLE_MAX; i++){
 
@@ -112,7 +112,7 @@ void scan(){
             Serial.print(",");
             Serial.print(y);
             Serial.print(",");
-            Serial.print(z);
+            Serial.println(z);
 
             move_stepper();
         }
