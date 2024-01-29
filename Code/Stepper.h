@@ -22,13 +22,13 @@ class Stepper {
 
     public :
 
+        static const int ANGLE_PER_STEP = 1.8 // Angle per step of the stepper motor
+
         Stepper();
 
         void move_stepper_motor();
 
         void calibrate_stepper_motor();
-
-        static const int ANGLE_PER_STEP = 1.8 // Angle per step of the stepper motor
 
     private :
 

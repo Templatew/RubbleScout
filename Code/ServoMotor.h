@@ -13,69 +13,35 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 /*  
     Author : https://github.com/Templatew
     Date : 01-2024
-    Version : N/A
-
-    Description :
-
-        * This is the main file for the robot. It will be used to call all the other files and functions.
-        * It will also be used to set up the robot and the sensors.
 */
 
-#include "Motors.h"
-#include "Bluetooth.h"
-#include "Lidar.h"
-#include "IrSensor.h"
-#include "ServoMotor.h"
-#include "Stepper.h"
+#ifndef Servo_h
+#define Servo_h
 
-void setup() {
+class ServoMotor {
 
-    // Set up motors
-    Motors motors;
+    public :
 
-    // Set up bluetooth
-    Bluetooth bluetooth;
+        static const int ANGLE_MIN = 1000; // -90 degrees
+        static const int ANGLE_MAX = 2000; // 90 degrees
 
-    // Set up Lidar
-    Lidar lidar;
+        static const int ANGLE_MIN_DEGREES = -90;
+        static const int ANGLE_MAX_DEGREES = 90;
 
-    // Set up Ir Sensor
-    IrSensor irSensor;
+        static const int RANGE_DEGREES = ANGLE_MAX_DEGREES - ANGLE_MIN_DEGREES;
+        static const int RANGE_MICROSECONDS = ANGLE_MAX - ANGLE_MIN;
 
-    // Set up Servo
-    ServoMotor servo;
+        Servo();
 
-    // Set up serial
-    Serial.begin(9600);
+        void move_servo_to(int microseconds);
+
+        double microseconds_to_degrees(int microseconds);
+
+
+    private :
+
+        static const int _SERVO_PIN = 9;
+
 }
 
-void loop() {
-
-    char data = bluetooth.get_data();
-
-    switch(data) {
-
-        case 'F':
-            motors.move(255, 255);
-            break;
-
-        case 'B':
-            motors.move(-255, -255);
-            break;
-
-        case 'L':
-            motors.move(-255, 255);
-            break;
-
-        case 'R':
-            motors.move(255, -255);
-            break;
-
-        case 'S':
-            motors.move(0, 0);
-            break;
-
-    }
-}
-
-
+#endif

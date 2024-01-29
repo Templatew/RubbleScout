@@ -13,69 +13,27 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 /*  
     Author : https://github.com/Templatew
     Date : 01-2024
-    Version : N/A
-
-    Description :
-
-        * This is the main file for the robot. It will be used to call all the other files and functions.
-        * It will also be used to set up the robot and the sensors.
 */
 
-#include "Motors.h"
-#include "Bluetooth.h"
-#include "Lidar.h"
-#include "IrSensor.h"
 #include "ServoMotor.h"
-#include "Stepper.h"
+#include <Servo.h>
 
-void setup() {
+ServoMotor::Servo(){
 
-    // Set up motors
-    Motors motors;
-
-    // Set up bluetooth
-    Bluetooth bluetooth;
-
-    // Set up Lidar
-    Lidar lidar;
-
-    // Set up Ir Sensor
-    IrSensor irSensor;
-
-    // Set up Servo
-    ServoMotor servo;
-
-    // Set up serial
-    Serial.begin(9600);
-}
-
-void loop() {
-
-    char data = bluetooth.get_data();
-
-    switch(data) {
-
-        case 'F':
-            motors.move(255, 255);
-            break;
-
-        case 'B':
-            motors.move(-255, -255);
-            break;
-
-        case 'L':
-            motors.move(-255, 255);
-            break;
-
-        case 'R':
-            motors.move(255, -255);
-            break;
-
-        case 'S':
-            motors.move(0, 0);
-            break;
-
-    }
+    servo.attach(_SERVO_PIN, ANGLE_MIN, ANGLE_MAX);
 }
 
 
+/*
+ Position "0" (1.5 ms pulse) is middle, 
+ "90" (~2ms pulse) is all the way to the right. 
+ "-90" (~1ms pulse) is all the way to the left.
+*/
+void Servo::move_servo_to(int microseconds){
+    servo.writeMicroseconds(microseconds);
+}
+
+double microseconds_to_degrees(int microseconds){
+
+    return ((microseconds - ANGLE_MIN) * RANGE_DEGREES / RANGE_MICROSECONDS) + ANGLE_MIN_DEGREES;
+}

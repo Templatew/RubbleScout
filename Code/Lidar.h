@@ -15,6 +15,9 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
     Date : 01-2024
 */
 
+#ifndef Lidar_h
+#define Lidar_h
+
 class Lidar{
 
     public :
@@ -23,9 +26,12 @@ class Lidar{
             
             unsigned long int getDistance();
 
+
     private :
 
         
 
 
 }
+
+#endif

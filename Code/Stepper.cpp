@@ -33,10 +33,4 @@ void Stepper::move_stepper_motor(){
     delayMicroseconds(_DELAY_STEPPER_MOTOR);
 }
 
-// Calibrate the stepper motor
-void Stepper::calibrate_stepper_motor(){
-    
-    while(!is_Ir_triggered()){
-        move_stepper_motor();
-    }
-}
+
