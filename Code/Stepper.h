@@ -22,7 +22,7 @@ class Stepper {
 
     public :
 
-        static const int ANGLE_PER_STEP = 1.8 // Angle per step of the stepper motor
+        static const int ANGLE_PER_STEP = 1.8; // Angle per step of the stepper motor
 
         Stepper();
 
