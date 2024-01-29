@@ -20,9 +20,8 @@ const int STEP = 3;
 const int DIR_STEPPER_MOTOR = 2;
 
 // Variables
-nb_steps = 0; // Number of steps taken by the stepper motor
+unsigned long nb_steps = 0; // Number of steps taken by the stepper motor
 const int DELAY_STEPPER = 500 // ms between each step, if not working try 4ms
-unsigned long stepper_delay = 0;
 
 // Functions
 
