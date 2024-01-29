@@ -33,7 +33,7 @@ void Servo::move_servo_to(int microseconds){
     servo.writeMicroseconds(microseconds);
 }
 
-double microseconds_to_degrees(int microseconds){
+double Servo::microseconds_to_degrees(int microseconds){
 
     return ((microseconds - ANGLE_MIN) * RANGE_DEGREES / RANGE_MICROSECONDS) + ANGLE_MIN_DEGREES;
 }

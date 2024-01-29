@@ -18,6 +18,8 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 #ifndef Bluetooth_h
 #define Bluetooth_h
 
+#include <SoftwareSerial.h>
+
 class Bluetooth {
 
     public :
@@ -31,12 +33,16 @@ class Bluetooth {
 
     private :
 
+        SoftwareSerial BlueT;
+
         // Pins
         static const int _RX = 11;
         static const int _TX = 10;
+
+
 
 };
 
 
 
-// #endif
+#endif

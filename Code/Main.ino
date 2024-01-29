@@ -51,28 +51,28 @@ void setup() {
 
 void loop() {
 
-    char data = bluetooth.get_data();
+    char data = Bluetooth.get_data();
 
     switch(data) {
 
         case 'F':
-            motors.move(255, 255);
+            Motors.move(255, 255);
             break;
 
         case 'B':
-            motors.move(-255, -255);
+            Motors.move(-255, -255);
             break;
 
         case 'L':
-            motors.move(-255, 255);
+            Motors.move(-255, 255);
             break;
 
         case 'R':
-            motors.move(255, -255);
+            Motors.move(255, -255);
             break;
 
         case 'S':
-            motors.move(0, 0);
+            Motors.move(0, 0);
             break;
 
     }

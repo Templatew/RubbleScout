@@ -23,7 +23,7 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 
 Bluetooth::Bluetooth() {
 
-    SoftwareSerial BlueT(_RX,_TX);
+    BlueT(_RX,_TX);
     BlueT.begin(9600);
 }
 
