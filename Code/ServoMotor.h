@@ -15,8 +15,10 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
     Date : 01-2024
 */
 
-#ifndef Servo_h
-#define Servo_h
+#ifndef SERVO_H
+#define SERVO_H
+
+#include <Servo.h>
 
 class ServoMotor {
 
@@ -31,15 +33,13 @@ class ServoMotor {
         static const int RANGE_DEGREES = ANGLE_MAX_DEGREES - ANGLE_MIN_DEGREES;
         static const int RANGE_MICROSECONDS = ANGLE_MAX - ANGLE_MIN;
 
-        Servo();
+        ServoMotor();
 
         void move_servo_to(int microseconds);
 
-        double microseconds_to_degrees(int microseconds);
-
-
     private :
 
+        Servo _servo;
         static const int _SERVO_PIN = 9;
 
 };

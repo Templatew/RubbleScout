@@ -15,23 +15,47 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
     Date : 01-2024
 */
 
-#ifndef Lidar_h
-#define Lidar_h
+#ifndef LIDAR_H
+#define LIDAR_H
+#include <Wire.h>
+#include <LIDARLite.h>
+#include <Servo.h>
+#include "ServoMotor.h"
+#include "Stepper.h"
+#include "IrSensor.h"
 
 class Lidar{
 
     public :
     
-            Lidar();
+        Lidar(ServoMotor& servo_motor, Stepper& stepper, IrSensor& ir_sensor);
             
-            unsigned long int getDistance();
+        double get_distance_lidar();
 
+        void calibrate_stepper_motor();
+
+        double microseconds_to_degrees(int microseconds);
+
+        double degrees_to_radians(double degrees);
+
+        double microseconds_to_radians(int microseconds);
+
+        void spherical_to_cartesian(double r, double theta, double phi);
+        
+        void scan();
 
     private :
 
-        
+        LIDARLite _Lidar;
+        ServoMotor _servo_motor;
+        Stepper _stepper;
+        IrSensor _ir_sensor;
 
+        double cartesians[3];
 
 };
+
+
+
 
 #endif

@@ -15,8 +15,8 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
     Date : 01-2024
 */
 
-#ifndef IrSensor_h
-#define IrSensor_h
+#ifndef IRSENSOR_H
+#define IRSENSOR_H
 
 class IrSensor{
 

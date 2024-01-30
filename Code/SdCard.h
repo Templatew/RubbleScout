@@ -15,23 +15,32 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
     Date : 01-2024
 */
 
-#include <Arduino.h>
-#include <SoftwareSerial.h>
-#include "Bluetooth.h"
+#ifndef SDCARD_H
+#define SDCARD_H
+
+// include the SD library:
+#include <SPI.h>
+#include <SD.h>
+
+class SdCard {
+
+    public :
+
+        SdCard();
+
+        void write_to_file(String path, String data);
+
+        String read_on_sd_card(String path);
+
+    private :
+
+        // change this to match your SD shield or module;
+        // Arduino Ethernet shield: pin 4
+        // Adafruit SD shields and modules: pin 10
+        // Sparkfun SD shield: pin 8
+        // MKRZero SD: SDCARD_SS_PIN
+        static const int _SD_CHIP_SELECT = 4;
+};
 
 
-
-Bluetooth::Bluetooth() {
-
-    BlueT(_RX,_TX);
-    BlueT.begin(9600);
-}
-
-char Bluetooth::get_data() {
-
-    if (BlueT.available()){
-        Data=BlueT.read();
-    }
-
-    return Data;
-}
+#endif

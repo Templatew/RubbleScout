@@ -22,59 +22,72 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 */
 
 #include "Motors.h"
-#include "Bluetooth.h"
 #include "Lidar.h"
 #include "IrSensor.h"
-#include "ServoMotor.h"
 #include "Stepper.h"
+#include "ServoMotor.h"
+#include <SoftwareSerial.h>
+
+
+// Set up motors
+Motors motors;
+
+// Set up bluetooth
+const int RX = 11;
+const int TX = 10;
+SoftwareSerial BT(RX,TX);
+
+// Set up Ir Sensor
+IrSensor irSensor;
+
+// Set up Servo
+ServoMotor servo;
+
+// Set up Stepper
+Stepper stepper;
+
+// Set up Lidar
+Lidar lidar(servo, stepper, irSensor);
 
 void setup() {
 
-    // Set up motors
-    Motors motors;
+    // Start bluetooth communication
+    BT.begin(9600);
 
-    // Set up bluetooth
-    Bluetooth bluetooth;
-
-    // Set up Lidar
-    Lidar lidar;
-
-    // Set up Ir Sensor
-    IrSensor irSensor;
-
-    // Set up Servo
-    ServoMotor servo;
-
-    // Set up serial
+    // Start serial communication
     Serial.begin(9600);
 }
 
 void loop() {
 
-    char data = Bluetooth.get_data();
+    double test = sin(3);
 
+    char data = 'S';
+    if (BT.available()){
+        data=BT.read();
+    }
+    
     switch(data) {
 
         case 'F':
-            Motors.move(255, 255);
+            motors.move(255, 255);
             break;
 
         case 'B':
-            Motors.move(-255, -255);
+            motors.move(-255, -255);
             break;
 
         case 'L':
-            Motors.move(-255, 255);
+            motors.move(-255, 255);
             break;
 
         case 'R':
-            Motors.move(255, -255);
+            motors.move(255, -255);
             break;
 
         case 'S':
-            Motors.move(0, 0);
+            motors.move(0, 0);
             break;
-
     }
 }
 

@@ -15,34 +15,53 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
     Date : 01-2024
 */
 
-#ifndef Bluetooth_h
-#define Bluetooth_h
+// include the SD library:
+#include <SPI.h>
+#include <SD.h>
+#include "SdCard.h"
 
-#include <SoftwareSerial.h>
+SdCard::SdCard() {
+    // see if the card is present and can be initialized:
+    if (!SD.begin(_SD_CHIP_SELECT)) {
+        Serial.println("Card failed, or not present");
+        // don't do anything more:
+        while (1);
+    }
+    Serial.println("card initialized.");
+}
 
-class Bluetooth {
+void SdCard::write_to_file(String path, String data) {
+    
+    // open the file. note that only one file can be open at a time,
+    // so you have to close this one before opening another.
+    File dataFile = SD.open(path, FILE_WRITE);
 
-    public :
+    // if the file is available, write to it:
+    if (dataFile) {
+        dataFile.println(data);
+        dataFile.close();
+    }
+    // if the file isn't open, pop up an error:
+    else {
+        Serial.println("error opening " + path);
+    }
+}
 
-        Bluetooth();
+String SdCard::read_on_sd_card(String path) {
+    
+    // open the file. note that only one file can be open at a time,
+    // so you have to close this one before opening another.
+    File dataFile = SD.open(path);
 
-        char get_data();
-
-        //Data
-        char Data;
-
-    private :
-
-        SoftwareSerial BlueT;
-
-        // Pins
-        static const int _RX = 11;
-        static const int _TX = 10;
-
-
-
-};
-
-
-
-#endif
+    // if the file is available, write to it:
+    if (dataFile) {
+        String data = dataFile.readString();
+        dataFile.close();
+        return data;
+    }
+    // if the file isn't open, pop up an error:
+    else {
+        Serial.println("error opening " + path);
+        return "";
+    }
+}

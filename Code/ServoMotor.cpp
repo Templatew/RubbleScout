@@ -18,22 +18,17 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 #include "ServoMotor.h"
 #include <Servo.h>
 
-ServoMotor::Servo(){
+ServoMotor::ServoMotor(){
 
-    servo.attach(_SERVO_PIN, ANGLE_MIN, ANGLE_MAX);
+    _servo.attach(_SERVO_PIN, ANGLE_MIN, ANGLE_MAX);
 }
-
 
 /*
  Position "0" (1.5 ms pulse) is middle, 
  "90" (~2ms pulse) is all the way to the right. 
  "-90" (~1ms pulse) is all the way to the left.
 */
-void Servo::move_servo_to(int microseconds){
-    servo.writeMicroseconds(microseconds);
+void ServoMotor::move_servo_to(int microseconds){
+    _servo.writeMicroseconds(microseconds);
 }
 
-double Servo::microseconds_to_degrees(int microseconds){
-
-    return ((microseconds - ANGLE_MIN) * RANGE_DEGREES / RANGE_MICROSECONDS) + ANGLE_MIN_DEGREES;
-}

@@ -15,8 +15,8 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
     Date : 01-2024
 */
 
-#ifndef Stepper_h
-#define Stepper_h
+#ifndef STEPPER_H
+#define STEPPER_H
 
 class Stepper {
 
@@ -27,8 +27,6 @@ class Stepper {
         Stepper();
 
         void move_stepper_motor();
-
-        void calibrate_stepper_motor();
 
     private :
 
