@@ -65,8 +65,8 @@ Servo servo;
 #define ANGLE_MAX = 1600; // Maximum angle for servo in microseconds (180 degrees = 2500 microseconds)
 #define ANGLE_MOY = (ANGLE_MAX + ANGLE_MIN) / 2; // Middle angle for servo in microseconds
 
-#define ANGLE_MIN_DEG = map(ANGLE_MIN, 1000, 2500, 0, 180); // Minimum angle for servo in degrees
-#define ANGLE_MAX_DEG = map(ANGLE_MAX, 1000, 2500, 0, 180); // Maximum angle for servo in degrees
+#define ANGLE_MIN_DEG = map(ANGLE_MIN, 500, 2500, 0, 180); // Minimum angle for servo in degrees
+#define ANGLE_MAX_DEG = map(ANGLE_MAX, 500, 2500, 0, 180); // Maximum angle for servo in degrees
 
 #define RANGE_MICROSECONDS = ANGLE_MAX - ANGLE_MIN; // Range of servo in microseconds
 #define RANGE_DEGREES = ANGLE_MAX_DEG - ANGLE_MIN_DEG; // Range of servo in degrees
