@@ -380,4 +380,82 @@ void scanLidar3D(char filename[]) {
 
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Setup
+
+void setup() {
+    // Initialize serial communication
+    Serial.begin(9600);
+
+    // Setup H-bridge
+    setupHbridge();
+
+    // Setup servo
+    setupServo();
+
+    // Setup IR sensor
+    setupIrSensor();
+
+    // Setup stepper motor
+    setupStepper();
+
+    // Setup SD card
+    setupSD();
+
+    // Setup Bluetooth
+    setupBluetooth();
+
+    // Setup Lidar Lite v3
+    setupLidar();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Loop
+
+void loop() {
+    
+
+    char data = readBluetooth();
+    
+    switch(data) {
+
+        case 'F':
+            motors.move(255, 255);
+            break;
+
+        case 'B':
+            motors.move(-255, -255);
+            break;
+
+        case 'L':
+            motors.move(-255, 255);
+            break;
+
+        case 'R':
+            motors.move(255, -255);
+            break;
+
+        case 'S':
+            motors.move(0, 0);
+            break;
+
+        case 'C':
+            calibrateStepper();
+            break;
+        
+        case 'D':
+            scanLidar3D(FILENAME);
+            break;
+
+        default:
+            motors.move(0, 0);
+            break;
+    }
+
+
+}
+
+
 
