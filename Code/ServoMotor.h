@@ -24,8 +24,8 @@ class ServoMotor {
 
     public :
 
-        static const int ANGLE_MIN = 1000; // -90 degrees
-        static const int ANGLE_MAX = 2000; // 90 degrees
+        static const int ANGLE_MIN = 1000; // -90 degrees = 500 microseconds
+        static const int ANGLE_MAX = 1600; // 90 degrees = 2500 microseconds
 
         static const int ANGLE_MIN_DEGREES = -90;
         static const int ANGLE_MAX_DEGREES = 90;
