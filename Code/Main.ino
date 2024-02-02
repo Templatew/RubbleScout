@@ -33,27 +33,27 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 // Define the pins for the Arduino Uno R3
 
 // Double H-Bridge pins
-#define DIR1 7;
-#define DIR2 4;
-#define PWM1 6;
-#define PWM2 5;
+#define DIR1 7
+#define DIR2 4
+#define PWM1 6
+#define PWM2 5
 
 // Servo pins
-#define SERVO 9;
+#define SERVO 9
 
 // Stepper motor pins
-#define STEP 15;
-#define DIR 14;
+#define STEP 15
+#define DIR 14
 
 // IR sensor pins
-#define IR1 A2;
+#define IR1 A2
 
 // SD card pins
-#define SD_CS 10; // SD card chip select pin
+#define SD_CS 10 // SD card chip select pin
 
 // Bluetooth pins
-#define BT_RX 3; // Bluetooth receive pin
-#define BT_TX 2; // Bluetooth transmit pin
+#define BT_RX 3 // Bluetooth receive pin
+#define BT_TX 2 // Bluetooth transmit pin
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -61,30 +61,31 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 
 // Servo
 Servo servo;
-#define ANGLE_MIN = 1000; // Minimum angle for servo in microseconds (0 degrees = 500 microseconds)
-#define ANGLE_MAX = 1600; // Maximum angle for servo in microseconds (180 degrees = 2500 microseconds)
-#define ANGLE_MOY = (ANGLE_MAX + ANGLE_MIN) / 2; // Middle angle for servo in microseconds
+#define ANGLE_MIN 1000 // Minimum angle for servo in microseconds (0 degrees = 500 microseconds)
+#define ANGLE_MAX 1600 // Maximum angle for servo in microseconds (180 degrees = 2500 microseconds)
+#define ANGLE_MOY (ANGLE_MAX + ANGLE_MIN) / 2 // Middle angle for servo in microseconds
 
-#define ANGLE_MIN_DEG = map(ANGLE_MIN, 500, 2500, 0, 180); // Minimum angle for servo in degrees
-#define ANGLE_MAX_DEG = map(ANGLE_MAX, 500, 2500, 0, 180); // Maximum angle for servo in degrees
+#define ANGLE_MIN_DEG map(ANGLE_MIN, 500, 2500, 0, 180) // Minimum angle for servo in degrees
+#define ANGLE_MAX_DEG map(ANGLE_MAX, 500, 2500, 0, 180) // Maximum angle for servo in degrees
 
-#define RANGE_MICROSECONDS = ANGLE_MAX - ANGLE_MIN; // Range of servo in microseconds
-#define RANGE_DEGREES = ANGLE_MAX_DEG - ANGLE_MIN_DEG; // Range of servo in degrees
+#define RANGE_MICROSECONDS ANGLE_MAX - ANGLE_MIN // Range of servo in microseconds
+#define RANGE_DEGREES ANGLE_MAX_DEG - ANGLE_MIN_DEG // Range of servo in degrees
 
 // Stepper motor
-#define STEPS_ANGLE_DEFAULT = 1.8; // Number of degrees per step in default mode
-#define MICROSTEPS = 16; // Number of microsteps per step
-#define STEPS_ANGLE = STEPS_ANGLE_DEFAULT / MICROSTEPS; // Number of degrees per step
-#define STEPS_REV = 360 / STEPS_ANGLE; // Number of steps per revolution
-#define MAX_DELAY = 1000; // Maximum delay between steps in microseconds
-#define MIN_DELAY = 300; // Minimum delay between steps in microseconds
+#define STEPS_ANGLE_DEFAULT 1.8 // Number of degrees per step in default mode
+#define MICROSTEPS 16 // Number of microsteps per step
+#define STEPS_ANGLE STEPS_ANGLE_DEFAULT / MICROSTEPS // Number of degrees per step
+#define STEPS_REV 360 / STEPS_ANGLE // Number of steps per revolution
+#define MAX_DELAY 1000 // Maximum delay between steps in microseconds
+#define MIN_DELAY 300 // Minimum delay between steps in microseconds
 int delayStepperMotor = 500; // Delay between steps in microseconds
 
 // IR sensor
-#define IR_THRESHOLD = 100; // Threshold for IR sensor
+#define IR_THRESHOLD 100 // Threshold for IR sensor
 
 // SD card
-#define FILENAME = "data.txt"; // Name of file to save data to
+#define FILENAME "data.txt" // Name of file to save data to
+File dataFile; // File to save data to
 
 //Lidar Lite v3
 LIDARLite myLidarLite;
@@ -107,8 +108,8 @@ void setupHbridge() {
     pinMode(PWM2, OUTPUT);
 
     // Force STOP
-    AnalogWrite(PWM1, 0);
-    AnalogWrite(PWM2, 0);
+    analogWrite(PWM1, 0);
+    analogWrite(PWM2, 0);
 }
 
 void move(int speedLeft, int speedRight){
@@ -239,10 +240,10 @@ void createFile(char filename[]) {
 
 void openFile(char filename[]) {
     // Open file
-    File dataFile = SD.open(FILENAME);
+    dataFile = SD.open(FILENAME);
 }
 
-void closeFile(char filename[]) {
+void closeFile() {
     // Close file
     dataFile.close();
 }
@@ -369,15 +370,12 @@ void scanLidar3D(char filename[]) {
             double x = cartesian[0];
             double y = cartesian[1];
             double z = cartesian[2];
-            writeToFile(filename, x + "," + y + "," + z + "\n");
-            
+            writeToFile(filename, String(x,4)+", "+String(y,4)+", "+String(z,4)+"\n"); 
         }
-
     }
 
     // Close file
-    closeFile(filename);
-
+    closeFile();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -408,6 +406,12 @@ void setup() {
 
     // Setup Lidar Lite v3
     setupLidar();
+
+    // test SD
+    openFile(FILENAME);
+    writeToFile(FILENAME, "Hello, world!");
+    closeFile(FILENAME);
+    
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -422,23 +426,23 @@ void loop() {
     switch(data) {
 
         case 'F':
-            motors.move(255, 255);
+            move(255, 255);
             break;
 
         case 'B':
-            motors.move(-255, -255);
+            move(-255, -255);
             break;
 
         case 'L':
-            motors.move(-255, 255);
+            move(-255, 255);
             break;
 
         case 'R':
-            motors.move(255, -255);
+            move(255, -255);
             break;
 
         case 'S':
-            motors.move(0, 0);
+            move(0, 0);
             break;
 
         case 'C':
@@ -450,7 +454,7 @@ void loop() {
             break;
 
         default:
-            motors.move(0, 0);
+            move(0, 0);
             break;
     }
 
