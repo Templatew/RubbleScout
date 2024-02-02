@@ -231,11 +231,16 @@ void setupSD() {
     SD.begin(SD_CS);
 }
 
-void createFile(char filename[]) {
-    // Create file
-    File dataFile = SD.open(FILENAME, FILE_WRITE);
-    // Close file
-    dataFile.close();
+void createFile(char filename[])
+{
+  dataFile = SD.open(filename, FILE_WRITE);
+
+//   if (dataFile){
+//     Serial.println("File created successfully.");
+//   } 
+//   else{
+//     Serial.println("Error while creating file.");
+//   }
 }
 
 void openFile(char filename[]) {
@@ -344,7 +349,7 @@ void scanLidar3D(char filename[]) {
     setAngleServo(ANGLE_MIN);
 
     // Open file
-    openFile(filename);
+    createFile(filename);
 
     // Scan
     double distance; // Distance in cm
@@ -370,7 +375,7 @@ void scanLidar3D(char filename[]) {
             double x = cartesian[0];
             double y = cartesian[1];
             double z = cartesian[2];
-            writeToFile(filename, String(x,4)+", "+String(y,4)+", "+String(z,4)+"\n"); 
+            // writeToFile(filename, String(x,4)+", "+String(y,4)+", "+String(z,4)+"\n"); 
         }
     }
 
@@ -407,10 +412,10 @@ void setup() {
     // Setup Lidar Lite v3
     setupLidar();
 
-    // test SD
-    openFile(FILENAME);
-    writeToFile(FILENAME, "Hello, world!");
-    closeFile(FILENAME);
+    // // test SD
+    // createFile(FILENAME);
+    // writeToFile(FILENAME, "Hello, world!");
+    // closeFile();
     
 }
 
