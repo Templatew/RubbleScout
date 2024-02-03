@@ -407,7 +407,6 @@ void scanLidar3D(char filename[]) {
             // char test[5];
             // dtostrf(steps, 1, 4, test);
             // writeToFile(test);
-            Get distance
             distance = getDistanceLidar();
 
             phi = steps * stepsAngle;
