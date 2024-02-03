@@ -210,7 +210,7 @@ void step(int steps) {
 
 void setSpeed(int speed) {
     // Set delay between steps
-    delayStepperMotor = map(speed, 0, 100, MAX_DELAY, MIN_DELAY);
+    delayStepperMotor = map(speed, 0, 100, MAX_DELAY/MICROSTEPS, MIN_DELAY/MICROSTEPS);
 }
 
 void calibrateStepper() {
@@ -231,29 +231,21 @@ void setupSD() {
     SD.begin(SD_CS);
 }
 
-void createFile(char filename[])
-{
+void createFile(char filename[]){
   dataFile = SD.open(filename, FILE_WRITE);
-
-//   if (dataFile){
-//     Serial.println("File created successfully.");
-//   } 
-//   else{
-//     Serial.println("Error while creating file.");
-//   }
 }
 
-void openFile(char filename[]) {
-    // Open file
-    dataFile = SD.open(FILENAME);
-}
+// void openFile(char filename[]) {
+//     // Open file
+//     dataFile = SD.open(FILENAME);
+// }
 
 void closeFile() {
     // Close file
     dataFile.close();
 }
 
-void writeToFile(char filename[], char data[]) {
+void writeToFile(char data[]) {
     // Write data to file
     dataFile.println(data);
 }
@@ -372,10 +364,20 @@ void scanLidar3D(char filename[]) {
 
             // Write data to file
             // Format : x,y,z/n
-            double x = cartesian[0];
-            double y = cartesian[1];
-            double z = cartesian[2];
-            // writeToFile(filename, String(x,4)+", "+String(y,4)+", "+String(z,4)+"\n"); 
+            char charBuff[20];
+            char x[5];
+            dtostrf(cartesian[0], 1, 4, x);
+            char y[5];
+            dtostrf(cartesian[1], 1, 4, y);
+            char z[5];
+            dtostrf(cartesian[2], 1, 4, z);
+            strcat(charBuff, x);
+            strcat(charBuff, ", ");
+            strcat(charBuff, y);
+            strcat(charBuff, ", ");
+            strcat(charBuff, z);
+            strcat(charBuff, "\n");
+            writeToFile(charBuff);
         }
     }
 
