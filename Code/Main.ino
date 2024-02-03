@@ -165,7 +165,7 @@ double microsecondsToRadians(int microseconds) {
     return degreesToRadians(microsecondsToDegrees(microseconds));
 }
 
-double degressToMicroseconds(int degrees) {
+double degreesToMicroseconds(int degrees) {
     // Convert degrees to microseconds
     return map(degrees, ANGLE_MIN_DEG, ANGLE_MAX_DEG, ANGLE_MIN, ANGLE_MAX);
 }
