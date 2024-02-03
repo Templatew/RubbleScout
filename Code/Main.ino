@@ -215,7 +215,7 @@ void setSpeed(int speed) {
 
 void calibrateStepper() {
     // Set Speed
-    setSpeed(30);
+    setSpeed(3);
     // Calibrate stepper motor
     while(!isObstacle()) {
         step(-1);
@@ -332,7 +332,7 @@ void scanLidar3D(char filename[]) {
     calibrateStepper();
 
     // Set speed
-    setSpeed(50);
+    setSpeed(30);
 
     // Set mode
     setModeLidar(0);
