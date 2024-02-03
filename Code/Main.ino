@@ -165,11 +165,6 @@ double microsecondsToRadians(int microseconds) {
     return degreesToRadians(microsecondsToDegrees(microseconds));
 }
 
-double degreesToMicroseconds(int degrees) {
-    // Convert degrees to microseconds
-    return map(degrees, ANGLE_MIN_DEG, ANGLE_MAX_DEG, ANGLE_MIN, ANGLE_MAX);
-}
-
 // Ir sensor
 
 void setupIrSensor() {
@@ -394,7 +389,8 @@ void scanLidar3D(char filename[]) {
     double distance; // Distance in cm
     int theta; // Angle in microseconds
     double phi; // Angle in degrees
-    int servoPrecision = min(degreesToMicroseconds(stepsAngle),1);
+    int maxServoPrecision = 1;
+    int servoPrecision = max(stepsAngle*(2000/180), maxServoPrecision);
 
 
     for (int theta = ANGLE_MIN; theta < ANGLE_MAX; theta+=servoPrecision) {
