@@ -72,9 +72,9 @@ Servo servo;
 #define RANGE_DEGREES ANGLE_MAX_DEG - ANGLE_MIN_DEG // Range of servo in degrees
 
 // Stepper motor
-#define STEPS_ANGLE_DEFAULT 1.8 // Number of degrees per step in default mode
+const double STEPS_ANGLE_DEFAULT = 1.8; // Number of degrees per step in default mode
 #define MICROSTEPS 16 // Number of microsteps per step
-#define STEPS_ANGLE STEPS_ANGLE_DEFAULT / MICROSTEPS // Number of degrees per step
+const double STEPS_ANGLE = STEPS_ANGLE_DEFAULT / MICROSTEPS; // Number of degrees per step
 #define STEPS_REV 360 / STEPS_ANGLE // Number of steps per revolution
 #define MAX_DELAY 1000 // Maximum delay between steps in microseconds
 #define MIN_DELAY 300 // Minimum delay between steps in microseconds
@@ -84,7 +84,7 @@ int delayStepperMotor = 500; // Delay between steps in microseconds
 #define IR_THRESHOLD 100 // Threshold for IR sensor
 
 // SD card
-#define FILENAME "data.txt" // Name of file to save data to
+#define FILENAME "test.txt" // Name of file to save data to
 File dataFile; // File to save data to
 
 //Lidar Lite v3
@@ -355,7 +355,10 @@ void scanLidar3D(char filename[]) {
         for (int steps = 0; steps < STEPS_REV; steps++) {
             // Step
             step(1);
-            // Get distance
+            // char test[5];
+            // dtostrf(steps, 1, 4, test);
+            // writeToFile(test);
+            Get distance
             distance = getDistanceLidar();
 
             phi = steps * STEPS_ANGLE;
@@ -414,10 +417,12 @@ void setup() {
     // Setup Lidar Lite v3
     setupLidar();
 
-    // // test SD
+
+    // test SD
     // createFile(FILENAME);
-    // writeToFile(FILENAME, "Hello, world!");
+    // writeToFile("Hello, world!");
     // closeFile();
+    // scanLidar3D(FILENAME);
     
 }
 
@@ -427,7 +432,6 @@ void setup() {
 
 void loop() {
     
-
     char data = readBluetooth();
     
     switch(data) {
