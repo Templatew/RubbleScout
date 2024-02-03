@@ -44,6 +44,8 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 // Stepper motor pins
 #define STEP 15
 #define DIR 14
+#define MS1 3
+#define MS2 2
 
 // IR sensor pins
 #define IR1 A2
@@ -73,9 +75,9 @@ Servo servo;
 
 // Stepper motor
 const double STEPS_ANGLE_DEFAULT = 1.8; // Number of degrees per step in default mode
-#define MICROSTEPS 16 // Number of microsteps per step
-const double STEPS_ANGLE = STEPS_ANGLE_DEFAULT / MICROSTEPS; // Number of degrees per step
-#define STEPS_REV 360 / STEPS_ANGLE // Number of steps per revolution
+int microsteps = 16; // Number of microsteps per step
+double stepsAngle = STEPS_ANGLE_DEFAULT / microsteps; // Number of degrees per step
+int stepsPerRev = 360 / stepsAngle; // Number of steps per revolution
 #define MAX_DELAY 1000 // Maximum delay between steps in microseconds
 #define MIN_DELAY 300 // Minimum delay between steps in microseconds
 int delayStepperMotor = 500; // Delay between steps in microseconds
@@ -84,7 +86,7 @@ int delayStepperMotor = 500; // Delay between steps in microseconds
 #define IR_THRESHOLD 100 // Threshold for IR sensor
 
 // SD card
-#define FILENAME "test.txt" // Name of file to save data to
+#define FILENAME "data.txt" // Name of file to save data to
 File dataFile; // File to save data to
 
 //Lidar Lite v3
@@ -163,6 +165,11 @@ double microsecondsToRadians(int microseconds) {
     return degreesToRadians(microsecondsToDegrees(microseconds));
 }
 
+double degressToMicroseconds(int degrees) {
+    // Convert degrees to microseconds
+    return map(degrees, ANGLE_MIN_DEG, ANGLE_MAX_DEG, ANGLE_MIN, ANGLE_MAX);
+}
+
 // Ir sensor
 
 void setupIrSensor() {
@@ -186,9 +193,8 @@ void setupStepper() {
     // Set pin modes
     pinMode(STEP, OUTPUT);
     pinMode(DIR, OUTPUT);
-
-    // Set initial direction
-    digitalWrite(DIR, HIGH);
+    pinMode(MS1, OUTPUT);
+    pinMode(MS2, OUTPUT);
 }
 
 void step(int steps) {
@@ -208,9 +214,47 @@ void step(int steps) {
     }
 }
 
+void setPrecision(int precision) {
+    // Set microsteps
+    switch(precision) {
+        case 8:
+            // 8 microsteps
+            microsteps = 8;
+            digitalWrite(MS1, LOW);
+            digitalWrite(MS2, LOW);
+            break;
+        case 16:
+            // 16 microsteps
+            microsteps = 16;
+            digitalWrite(MS1, HIGH);
+            digitalWrite(MS2, HIGH);
+            break;
+        case 32:
+            // 32 microsteps
+            microsteps = 32;
+            digitalWrite(MS1, HIGH);
+            digitalWrite(MS2, LOW);
+            break;
+        case 64:
+            // 64 microsteps
+            microsteps = 64;
+            digitalWrite(MS1, LOW);
+            digitalWrite(MS2, HIGH);
+            break;
+        default:
+            // Default to 16 microsteps
+            microsteps = 16;
+            digitalWrite(MS1, HIGH);
+            digitalWrite(MS2, HIGH);
+            break;
+    }
+    stepsAngle = STEPS_ANGLE_DEFAULT / microsteps; // Number of degrees per step
+    stepsPerRev = 360 / stepsAngle;
+}
+
 void setSpeed(int speed) {
     // Set delay between steps
-    delayStepperMotor = map(speed, 0, 100, MAX_DELAY/MICROSTEPS, MIN_DELAY/MICROSTEPS);
+    delayStepperMotor = map(speed, 0, 100, MAX_DELAY/microsteps, MIN_DELAY/microsteps);
 }
 
 void calibrateStepper() {
@@ -331,6 +375,9 @@ void scanLidar3D(char filename[]) {
     
     calibrateStepper();
 
+    // Set precision
+    setPrecision(8);
+
     // Set speed
     setSpeed(30);
 
@@ -347,12 +394,14 @@ void scanLidar3D(char filename[]) {
     double distance; // Distance in cm
     int theta; // Angle in microseconds
     double phi; // Angle in degrees
+    int servoPrecision = min(degreesToMicroseconds(stepsAngle),1);
 
-    for (int theta = ANGLE_MIN; theta < ANGLE_MAX; theta++) {
+
+    for (int theta = ANGLE_MIN; theta < ANGLE_MAX; theta+=servoPrecision) {
         // Set servo angle
         setAngleServo(theta);
         
-        for (int steps = 0; steps < STEPS_REV; steps++) {
+        for (int steps = 0; steps < stepsPerRev; steps++) {
             // Step
             step(1);
             // char test[5];
@@ -361,7 +410,7 @@ void scanLidar3D(char filename[]) {
             Get distance
             distance = getDistanceLidar();
 
-            phi = steps * STEPS_ANGLE;
+            phi = steps * stepsAngle;
             // Convert to cartesian coordinates
             sphericalToCartesian(distance, microsecondsToRadians(theta), degreesToRadians(phi));
 
