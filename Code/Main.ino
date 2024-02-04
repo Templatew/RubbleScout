@@ -78,8 +78,8 @@ const double STEPS_ANGLE_DEFAULT = 1.8; // Number of degrees per step in default
 int microsteps = 16; // Number of microsteps per step
 double stepsAngle = STEPS_ANGLE_DEFAULT / microsteps; // Number of degrees per step
 int stepsPerRev = 360 / stepsAngle; // Number of steps per revolution
-#define MAX_DELAY 1000 // Maximum delay between steps in microseconds
-#define MIN_DELAY 300 // Minimum delay between steps in microseconds
+#define MAX_DELAY 2000 // Maximum delay between steps in microseconds
+#define MIN_DELAY 500 // Minimum delay between steps in microseconds
 int delayStepperMotor = 500; // Delay between steps in microseconds
 
 // IR sensor
@@ -179,7 +179,7 @@ int readIrSensor() {
 
 bool isObstacle() {
     // Return true if obstacle detected
-    return readIrSensor() > IR_THRESHOLD;
+    return readIrSensor() < IR_THRESHOLD;
 }
 
 // Stepper motor
@@ -207,6 +207,12 @@ void step(int steps) {
         digitalWrite(STEP, LOW);
         delayMicroseconds(delayStepperMotor);
     }
+}
+
+
+void setSpeed(int speed) {
+    // Set delay between steps
+    delayStepperMotor = map(speed, 0, 100, (MAX_DELAY*8)/microsteps, (MIN_DELAY * 8)/microsteps);
 }
 
 void setPrecision(int precision) {
@@ -245,16 +251,14 @@ void setPrecision(int precision) {
     }
     stepsAngle = STEPS_ANGLE_DEFAULT / microsteps; // Number of degrees per step
     stepsPerRev = 360 / stepsAngle;
-}
-
-void setSpeed(int speed) {
-    // Set delay between steps
-    delayStepperMotor = map(speed, 0, 100, MAX_DELAY/microsteps, MIN_DELAY/microsteps);
+    setSpeed(10);
+    
 }
 
 void calibrateStepper() {
+    setPrecision(8);
     // Set Speed
-    setSpeed(3);
+    setSpeed(10);
     // Calibrate stepper motor
     while(!isObstacle()) {
         step(-1);
@@ -467,6 +471,15 @@ void setup() {
     // writeToFile("Hello, world!");
     // closeFile();
     // scanLidar3D(FILENAME);
+    calibrateStepper();
+    setPrecision(8);
+    setSpeed(100);
+    Serial.print(microsteps);
+    Serial.print("      ");
+    Serial.print(delayStepperMotor);
+    
+    Serial.println("calibrated");
+  
     
 }
 
@@ -476,6 +489,8 @@ void setup() {
 
 void loop() {
     
+    step(1);
+    Serial.println(readIrSensor());
     char data = readBluetooth();
     
     switch(data) {
