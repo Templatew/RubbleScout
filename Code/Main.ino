@@ -83,7 +83,7 @@ int stepsPerRev = 360 / stepsAngle; // Number of steps per revolution
 int delayStepperMotor = 500; // Delay between steps in microseconds
 
 // IR sensor
-#define IR_THRESHOLD 100 // Threshold for IR sensor
+#define IR_THRESHOLD 90 // Threshold for IR sensor
 
 // SD card
 #define FILENAME "data.txt" // Name of file to save data to
@@ -393,7 +393,7 @@ void scanLidar3D(char filename[]) {
     double distance; // Distance in cm
     int theta; // Angle in microseconds
     double phi; // Angle in degrees
-    int maxServoPrecision = 1;
+    int maxServoPrecision = 4;
     int servoPrecision = max(stepsAngle*(2000/180), maxServoPrecision);
 
 
@@ -471,14 +471,14 @@ void setup() {
     // writeToFile("Hello, world!");
     // closeFile();
     // scanLidar3D(FILENAME);
-    calibrateStepper();
-    setPrecision(8);
-    setSpeed(100);
-    Serial.print(microsteps);
-    Serial.print("      ");
-    Serial.print(delayStepperMotor);
+    // calibrateStepper();
+    // setPrecision(8);
+    // setSpeed(100);
+    // Serial.print(microsteps);
+    // Serial.print("      ");
+    // Serial.print(delayStepperMotor);
     
-    Serial.println("calibrated");
+    // Serial.println("calibrated");
   
     
 }
@@ -489,8 +489,11 @@ void setup() {
 
 void loop() {
     
-    step(1);
-    Serial.println(readIrSensor());
+    // step(1);
+
+    Serial.println(myLidarLite.distance());
+    delay(100);
+    // Serial.println("test");
     char data = readBluetooth();
     
     switch(data) {
