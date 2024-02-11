@@ -60,9 +60,6 @@ void processCommand(String command) {
     pwmg = constrain(-y+x, -255, 255);
     pwmd = constrain(-y-x, -255, 255);
     move(pwmg,pwmd);
-    // Serial.print(pwmg);
-    // Serial.print("  ");
-    // Serial.println(pwmd);
   }
 }
 
@@ -80,7 +77,17 @@ void processCommand(String command) {
 #define LEDC_TIMER_8_BIT 8
 #define LEDC_BASE_FREQ 5000
 
-void move(int speedLeft, int speedRight) {
+struct MouvementTaskParameters {
+  int speedLeft;
+  int speedRight;
+};
+
+void move(void *parameters) {
+
+  MouvementTaskParameters *MouvementTaskParameters = (MouvementTaskParameters*)parameters;
+  int speedLeft = MouvementTaskParameters->speedLeft;
+  int speedRight = MouvementTaskParameters->speedRight;
+  
   // Set the direction of the motors 
   if (speedRight < 0) {
     digitalWrite(DIR1, HIGH);
@@ -98,6 +105,8 @@ void move(int speedLeft, int speedRight) {
 
   ledcWrite(LEDC_CHANNEL_0, abs(speedRight));
   ledcWrite(LEDC_CHANNEL_1, abs(speedLeft));
+
+  delete MouvementTaskParameters;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,12 +135,7 @@ void setup() {
 }
 
 void loop() {
-  // if (Serial.available()) {
-  //   SerialBT.write(Serial.read());
-  // }
-  // if (SerialBT.available()) {
-  //   Serial.write(SerialBT.read());
-  // }
+
   // Read data from the Bluetooth module
   while (SerialBT.available()) {
     char incomingByte = SerialBT.read(); 
