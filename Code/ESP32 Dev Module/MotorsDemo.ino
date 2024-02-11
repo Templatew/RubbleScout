@@ -21,50 +21,6 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Bluetooth
-#include "BluetoothSerial.h"
-#define USE_PIN
-const char *pin = "1234"; // Change this to more secure PIN.
-
-String device_name = "ESP32-BT-Slave";
-
-#if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
-#error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
-#endif
-
-#if !defined(CONFIG_BT_SPP_ENABLED)
-#error Serial Bluetooth not available or not enabled. It is only available for the ESP32 chip.
-#endif
-
-BluetoothSerial SerialBT;
-
-String incomingData = ""; 
-bool commandStarted = false; 
-
-void processCommand(String command) {
-  int xIndex = command.indexOf('X'); // Find the index of 'X'
-  int yIndex = command.indexOf('Y'); // Find the index of 'Y'
-  
-  if (xIndex != -1 && yIndex != -1) {
-    
-    String xStr = command.substring(xIndex+1, yIndex);
-    String yStr = command.substring(yIndex+1);
-
-    int x = xStr.toInt(); 
-    int y = yStr.toInt(); 
-    int pwmg;
-    int pwmd;
-    if (y>0){
-      x = -x;
-    }
-    pwmg = constrain(-y+x, -255, 255);
-    pwmd = constrain(-y-x, -255, 255);
-    move(pwmg,pwmd);
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // H-Bridge
 
 #define DIR1 21  // Remplace par le pin GPIO pour la direction du moteur droit
@@ -107,6 +63,57 @@ void move(void *parameters) {
   ledcWrite(LEDC_CHANNEL_1, abs(speedLeft));
 
   delete MouvementTaskParameters;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Bluetooth
+#include "BluetoothSerial.h"
+#define USE_PIN
+const char *pin = "1234"; // Change this to more secure PIN.
+
+String device_name = "ESP32-BT-Slave";
+
+#if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
+#error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
+#endif
+
+#if !defined(CONFIG_BT_SPP_ENABLED)
+#error Serial Bluetooth not available or not enabled. It is only available for the ESP32 chip.
+#endif
+
+BluetoothSerial SerialBT;
+
+String incomingData = ""; 
+bool commandStarted = false; 
+
+void processCommand(String command) {
+  int xIndex = command.indexOf('X'); // Find the index of 'X'
+  int yIndex = command.indexOf('Y'); // Find the index of 'Y'
+  
+  if (xIndex != -1 && yIndex != -1) {
+    
+    String xStr = command.substring(xIndex+1, yIndex);
+    String yStr = command.substring(yIndex+1);
+
+    int x = xStr.toInt(); 
+    int y = yStr.toInt(); 
+    int pwmg;
+    int pwmd;
+    if (y>0){
+      x = -x;
+    }
+    pwmg = constrain(-y+x, -255, 255);
+    pwmd = constrain(-y-x, -255, 255);
+    xTaskCreatePinnedToCore(
+      move, /* Function to implement the task */
+      "MouvementTask", /* Name of the task */
+      10000,  /* Stack size in words */
+      new MouvementTaskParameters{pwmg, pwmd},  /* Task input parameter */
+      1,  /* Priority of the task */
+      NULL,  /* Task handle. */
+      1  /* Core where the task should run */)
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
