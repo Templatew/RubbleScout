@@ -12,7 +12,7 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 
 /**
  * @file MotorsDemo.ino
- * @brief Short Demo To Control The Chassis.
+ * @brief Short Demo To Control The Chassis on an ESP32.
  * 
  * @author Templatew
  * @date 02-2024
@@ -21,56 +21,26 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// BLuetooth
+#include "BluetoothSerial.h"
+#define USE_PIN
+const char *pin = "1234"; // Change this to more secure PIN.
 
-// Define pin numbers for motor control
-#define DIR1 7
-#define PW1 6
-#define DIR2 4
-#define PW2 5
+String device_name = "ESP32-BT-Slave";
 
-#include<SoftwareSerial.h>
-#define RX 9
-#define TX 8
-SoftwareSerial BlueT(RX,TX);
+#if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
+#error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
+#endif
+
+#if !defined(CONFIG_BT_SPP_ENABLED)
+#error Serial Bluetooth not available or not enabled. It is only available for the ESP32 chip.
+#endif
+
+BluetoothSerial SerialBT;
 
 String incomingData = ""; 
 bool commandStarted = false; 
 
-/**
- * Move the robot by controlling the motor speeds.
- * @param speed_left The speed of the left motor (-255 to 255).
- * @param speed_right The speed of the right motor (-255 to 255).
- */
-void move(int speed_left, int speed_right) {
-
-  // Set right motor direction based on speed
-  if (speed_right < 0) {
-    digitalWrite(DIR1, HIGH);
-  } 
-  else {
-    digitalWrite(DIR1, LOW);
-  }
-
-  // Set left motor direction based on speed
-  if (speed_left < 0) {
-    digitalWrite(DIR2, HIGH);
-  } 
-  else {
-    digitalWrite(DIR2, LOW);
-  }
-
-  // Set motor speeds
-  analogWrite(PW1, abs(speed_right));
-  analogWrite(PW2, abs(speed_left));
-}
-
-/**
- * Constrain a value between a minimum and maximum range.
- * @param value The value to constrain.
- * @param min The minimum value.
- * @param max The maximum value.
- * @return The constrained value.
- */
 int constrain(int value, int min, int max) {
   if (value < min) {
     return min;
@@ -81,12 +51,6 @@ int constrain(int value, int min, int max) {
   return value;
 }
 
-/**
- * Process a command received from the Bluetooth module.
- * The command should be in the format "{X<value>Y<value>}".
- * The X value represents the forward/backward movement, and the Y value represents the left/right movement.
- * @param command The command string to process.
- */
 void processCommand(String command) {
   int xIndex = command.indexOf('X'); // Find the index of 'X'
   int yIndex = command.indexOf('Y'); // Find the index of 'Y'
@@ -103,27 +67,78 @@ void processCommand(String command) {
     
     pwmg = constrain(-y+x, -255, 255);
     pwmd = constrain(-y-x, -255, 255);
-    move(pwmg,pwmd);
+    // move(pwmg,pwmd);
+    Serial.println(pwmg);
+    Serial.println(pwmd);
   }
 }
 
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  pinMode(DIR1,OUTPUT);
-  pinMode(DIR2,OUTPUT);
-  // pinMode(PW1,OUTPUT);
-  // pinMode(PW2,OUTPUT);
-  digitalWrite(DIR1,LOW);
-  digitalWrite(DIR2,LOW);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  //BT
-  BlueT.begin(9600);
+// H-Bridge
 
+#define DIR1 5  // Remplace par le pin GPIO pour la direction du moteur droit
+#define DIR2 18 // Remplace par le pin GPIO pour la direction du moteur gauche
+#define PW1 19  // Remplace par le pin GPIO pour la vitesse du moteur droit
+#define PW2 21  // Remplace par le pin GPIO pour la vitesse du moteur gauche
+
+#define LEDC_CHANNEL_0 0
+#define LEDC_CHANNEL_1 1
+#define LEDC_TIMER_8_BIT 8
+#define LEDC_BASE_FREQ 5000
+
+void move(int speedLeft, int speedRight) {
+  // Set the direction of the motors 
+  if (speedRight < 0) {
+    digitalWrite(DIR1, HIGH);
+  } 
+  else {
+    digitalWrite(DIR1, LOW);
+  }
+
+  if (speedLeft < 0) {
+    digitalWrite(DIR2, HIGH);
+  } 
+  else {
+    digitalWrite(DIR2, LOW);
+  }
+
+  ledcWrite(LEDC_CHANNEL_0, abs(speedRight));
+  ledcWrite(LEDC_CHANNEL_1, abs(speedLeft));
 }
 
-void loop(){
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void setup() {
+  Serial.begin(115200);
+
+  // Bluetooth
+  SerialBT.begin(device_name); //Bluetooth device name
+  Serial.printf("The device with name \"%s\" is started.\nNow you can pair it with Bluetooth!\n", device_name.c_str());
+  #ifdef USE_PIN
+    SerialBT.setPin(pin);
+    Serial.println("Using PIN");
+  #endif
+
+  // H-Bridge
+  pinMode(DIR1, OUTPUT);
+  pinMode(DIR2, OUTPUT);
+
+  // PWM Setup
+  ledcSetup(LEDC_CHANNEL_0, LEDC_BASE_FREQ, LEDC_TIMER_8_BIT);
+  ledcSetup(LEDC_CHANNEL_1, LEDC_BASE_FREQ, LEDC_TIMER_8_BIT);
+  // Attach the channel to the GPIO to be controlled
+  ledcAttachPin(PW1, LEDC_CHANNEL_0);
+  ledcAttachPin(PW2, LEDC_CHANNEL_1);
+}
+
+void loop() {
+  // if (Serial.available()) {
+  //   SerialBT.write(Serial.read());
+  // }
+  // if (SerialBT.available()) {
+  //   Serial.write(SerialBT.read());
+  // }
   // Read data from the Bluetooth module
   while (BlueT.available()) {
     char incomingByte = BlueT.read(); 
@@ -141,4 +156,5 @@ void loop(){
       incomingData += incomingByte; 
     }
   }
+  
 }
