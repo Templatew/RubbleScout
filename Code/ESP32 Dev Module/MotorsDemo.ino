@@ -62,6 +62,11 @@ void move(void *parameters) {
   ledcWrite(LEDC_CHANNEL_0, abs(speedRight));
   ledcWrite(LEDC_CHANNEL_1, abs(speedLeft));
 
+  Serial.print("Speed Left: ");
+  Serial.print(abs(speedLeft));
+  Serial.print(" Speed Right: ");
+  Serial.println(abs(speedRight));
+
   delete MouvementTaskParameters;
 }
 
