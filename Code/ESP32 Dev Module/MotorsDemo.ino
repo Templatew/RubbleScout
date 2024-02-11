@@ -62,11 +62,6 @@ void move(void *parameters) {
   ledcWrite(LEDC_CHANNEL_0, abs(speedRight));
   ledcWrite(LEDC_CHANNEL_1, abs(speedLeft));
 
-  Serial.print("Speed Left: ");
-  Serial.print(abs(speedLeft));
-  Serial.print(" Speed Right: ");
-  Serial.println(abs(speedRight));
-
   delete MouvementTaskParameters;
 }
 
@@ -110,14 +105,7 @@ void processCommand(String command) {
     }
     pwmg = constrain(-y+x, -255, 255);
     pwmd = constrain(-y-x, -255, 255);
-    xTaskCreatePinnedToCore(
-      move, /* Function to implement the task */
-      "MouvementTask", /* Name of the task */
-      10000,  /* Stack size in words */
-      new MouvementTaskParameters{pwmg, pwmd},  /* Task input parameter */
-      1,  /* Priority of the task */
-      NULL,  /* Task handle. */
-      1  /* Core where the task should run */)
+    move(pwmg,pwmd);
   }
 }
 
