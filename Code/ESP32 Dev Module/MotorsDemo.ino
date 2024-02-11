@@ -41,16 +41,6 @@ BluetoothSerial SerialBT;
 String incomingData = ""; 
 bool commandStarted = false; 
 
-int constrain(int value, int min, int max) {
-  if (value < min) {
-    return min;
-  }
-  if (value > max) {
-    return max;
-  }
-  return value;
-}
-
 void processCommand(String command) {
   int xIndex = command.indexOf('X'); // Find the index of 'X'
   int yIndex = command.indexOf('Y'); // Find the index of 'Y'
@@ -64,11 +54,14 @@ void processCommand(String command) {
     int y = yStr.toInt(); 
     int pwmg;
     int pwmd;
-    
-    pwmg = constrain(-y+x, -255, 255);
-    pwmd = constrain(-y-x, -255, 255);
-    // move(pwmg,pwmd);
-    Serial.println(pwmg);
+    if (y>0){
+      y = -y;
+    }
+    pwmg = constrain(y+x, -255, 255);
+    pwmd = constrain(y-x, -255, 255);
+    move(pwmg,pwmd);
+    Serial.print(pwmg);
+    Serial.print("  ");
     Serial.println(pwmd);
   }
 }
@@ -140,8 +133,8 @@ void loop() {
   //   Serial.write(SerialBT.read());
   // }
   // Read data from the Bluetooth module
-  while (BlueT.available()) {
-    char incomingByte = BlueT.read(); 
+  while (SerialBT.available()) {
+    char incomingByte = SerialBT.read(); 
 
     // Check if the command has started or ended
     if (incomingByte == '{') {
