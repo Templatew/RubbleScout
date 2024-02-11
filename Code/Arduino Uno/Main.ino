@@ -10,11 +10,16 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
         _\///________\///____\/////////____\/////////____\/////////____\/////////_____\//////////_____\///////////_________\////////______\/////_______\/////////________\/////____
 */  
 
-/*  
-    Author : https://github.com/Templatew
-    Date : 02-2024
-    Version : 1.0
-*/
+/**
+ * @file Main.ino
+ * @brief Main code file for the RubbleScout project.
+ * 
+ * This file contains the main code for the RubbleScout project. It includes the necessary libraries, defines the pin configurations, and implements various functions for controlling the hardware components such as the H-bridge, servo, IR sensor, stepper motor, SD card, Bluetooth, and Lidar Lite v3.
+ * 
+ * @author Templatew
+ * @date 02-2024
+ * @version 1.0
+ */
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -278,10 +283,6 @@ void createFile(char filename[]){
   dataFile = SD.open(filename, FILE_WRITE);
 }
 
-// void openFile(char filename[]) {
-//     // Open file
-//     dataFile = SD.open(FILENAME);
-// }
 
 void closeFile() {
     // Close file
