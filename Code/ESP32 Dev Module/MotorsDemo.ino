@@ -33,17 +33,7 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 #define LEDC_TIMER_8_BIT 8
 #define LEDC_BASE_FREQ 5000
 
-struct MouvementTaskParameters {
-  int speedLeft;
-  int speedRight;
-};
-
-void move(void *parameters) {
-
-  MouvementTaskParameters *MouvementTaskParameters = (MouvementTaskParameters*)parameters;
-  int speedLeft = MouvementTaskParameters->speedLeft;
-  int speedRight = MouvementTaskParameters->speedRight;
-  
+void move(int speedLeft, int speedRight) {
   // Set the direction of the motors 
   if (speedRight < 0) {
     digitalWrite(DIR1, HIGH);
@@ -61,9 +51,8 @@ void move(void *parameters) {
 
   ledcWrite(LEDC_CHANNEL_0, abs(speedRight));
   ledcWrite(LEDC_CHANNEL_1, abs(speedLeft));
-
-  delete MouvementTaskParameters;
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -152,6 +141,10 @@ void loop() {
     else if (commandStarted) {
       incomingData += incomingByte; 
     }
+  }
+  // FailSafe if connection is lost
+  if (!SerialBT.connected(1000)) {
+    move(0,0);
   }
   
 }
