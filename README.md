@@ -12,15 +12,6 @@ RubbleScout isn't just a robot; it's a beacon of hope and innovation in the real
 
 At this stage, RubbleScout is taking shape both in theory and in practice. Our goal is ambitious yet achievable: to engineer a robot that masters tough terrains, harnesses cutting-edge technology for navigation and safety, and becomes an indispensable asset in rescue missions.
 
-## Core Features
-
-* **Tracked Mobility**: Designed for versatility, our tracked system ensures stability and adaptability across various terrains.
-* **3D Modeling and Prototyping**: Leveraging 3D modeling and laser cutting for precision in design and assembly.
-* **Sensor Integration**: A sophisticated array of sensors including LIDAR and ultrasonic sensors for real-time obstacle detection and navigation.
-* **Autonomous and Manual Control**: Dual-mode operation allowing both autonomous navigation and manual control for complex scenarios.
-* **Robust Communication**: Reliable real-time data transmission to facilitate effective control and decision-making.
-* **Safety First Design**: Focusing on hazard detection to navigate safely in potentially dangerous environments.
-
 ## Literature Review and Research Insights
 
 Our journey began with a deep dive into the existing literature, where we explored the nuances of robotic design, particularly in the context of search and rescue operations.
@@ -32,10 +23,6 @@ Our journey began with a deep dive into the existing literature, where we explor
 Curious about our journey so far? Our weekly progress reports provide a detailed account of our development process, challenges encountered, and breakthroughs.
 
 * [Access our weekly progress reports here](https://github.com/Templatew/RubbleScout/tree/main/Docs/Weekly%20Reports)
-
-## Stay Tuned
-
-We're constantly updating this space with our latest developments. Keep an eye on this repo for more updates, and feel free to reach out if you have questions or suggestions.
 
 ## Gallery
 
