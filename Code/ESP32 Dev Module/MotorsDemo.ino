@@ -55,14 +55,14 @@ void processCommand(String command) {
     int pwmg;
     int pwmd;
     if (y>0){
-      y = -y;
+      x = -x;
     }
-    pwmg = constrain(y+x, -255, 255);
-    pwmd = constrain(y-x, -255, 255);
+    pwmg = constrain(-y+x, -255, 255);
+    pwmd = constrain(-y-x, -255, 255);
     move(pwmg,pwmd);
-    Serial.print(pwmg);
-    Serial.print("  ");
-    Serial.println(pwmd);
+    // Serial.print(pwmg);
+    // Serial.print("  ");
+    // Serial.println(pwmd);
   }
 }
 
@@ -70,10 +70,10 @@ void processCommand(String command) {
 
 // H-Bridge
 
-#define DIR1 5  // Remplace par le pin GPIO pour la direction du moteur droit
+#define DIR1 21  // Remplace par le pin GPIO pour la direction du moteur droit
 #define DIR2 18 // Remplace par le pin GPIO pour la direction du moteur gauche
 #define PW1 19  // Remplace par le pin GPIO pour la vitesse du moteur droit
-#define PW2 21  // Remplace par le pin GPIO pour la vitesse du moteur gauche
+#define PW2 5  // Remplace par le pin GPIO pour la vitesse du moteur gauche
 
 #define LEDC_CHANNEL_0 0
 #define LEDC_CHANNEL_1 1
