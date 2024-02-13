@@ -203,6 +203,8 @@ void step(int steps) {
     }
 }
 
+
+
 void setSpeed(int speed) {
     // Set delay between steps
     delayStepperMotor = map(speed, 0, 100, (MAX_DELAY*8)/microsteps, (MIN_DELAY * 8)/microsteps);
