@@ -40,10 +40,10 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 
 // H-Bridge
 
-#define DIR1 21  // GPIO pin for the right motor direction
-#define DIR2 18 // GPIO pin for the left motor direction
-#define PW1 19  // GPIO pin for the right motor speed
-#define PW2 5  // GPIO pin for the left motor speed
+#define DIR1 15  // GPIO pin for the right motor direction
+#define DIR2 16 // GPIO pin for the left motor direction
+#define PW1 4  // GPIO pin for the right motor speed
+#define PW2 17  // GPIO pin for the left motor speed
 
 #define LEDC_CHANNEL_0 0 // PWM channel for the right motor
 #define LEDC_CHANNEL_1 1 // PWM channel for the left motor
