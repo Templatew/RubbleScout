@@ -97,6 +97,10 @@ void move(int speedLeft, int speedRight) {
 const char *pin = "1234"; // Change this to a more secure PIN.
 
 String device_name = "ESP32-BT-Slave";
+BluetoothSerial SerialBT;
+
+String incomingData = ""; 
+bool commandStarted = false; 
 
 void setupBluetooth() {
     SerialBT.begin(device_name); // Bluetooth device name
