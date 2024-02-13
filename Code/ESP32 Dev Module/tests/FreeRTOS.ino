@@ -15,7 +15,7 @@ void blinkTask(void *parameter) {
 
 // Fonction pour imprimer un message sur la console série
 void printTask(void *parameter) {
-  for (;;) { // Boucle infinie
+  for (;;) { // Boucle infinie 
     Serial.println("Bonjour depuis le cœur 1 !");
     delay(2000); // Attend 2 secondes
   }
