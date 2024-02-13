@@ -163,6 +163,13 @@ Servo servo; // Create a servo object to control the pan-tilt mechanism
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Stepper motor
+
+// Stepper motor pins
+#define STEP 33
+#define DIR 32
+#define MS1 26
+#define MS2 25
+
 const double STEPS_ANGLE_DEFAULT = 1.8; // Number of degrees per step in default mode
 int microsteps = 16; // Number of microsteps per step
 double stepsAngle = STEPS_ANGLE_DEFAULT / microsteps; // Number of degrees per step
@@ -170,6 +177,76 @@ int stepsPerRev = 360 / stepsAngle; // Number of steps per revolution
 #define MAX_DELAY 2000 // Maximum delay between steps in microseconds
 #define MIN_DELAY 500 // Minimum delay between steps in microseconds
 int delayStepperMotor = 500; // Delay between steps in microseconds
+
+void setupStepper() {
+    // Set pin modes
+    pinMode(STEP, OUTPUT);
+    pinMode(DIR, OUTPUT);
+    pinMode(MS1, OUTPUT);
+    pinMode(MS2, OUTPUT);
+}
+
+void step(int steps) {
+    // Set direction
+    if (steps < 0) {
+        digitalWrite(DIR, HIGH);
+    } 
+    else {
+        digitalWrite(DIR, LOW);
+    }
+    // Step
+    for (int i = 0; i < abs(steps); i++) {
+        digitalWrite(STEP, HIGH);
+        delayMicroseconds(delayStepperMotor);
+        digitalWrite(STEP, LOW);
+        delayMicroseconds(delayStepperMotor);
+    }
+}
+
+void setSpeed(int speed) {
+    // Set delay between steps
+    delayStepperMotor = map(speed, 0, 100, (MAX_DELAY*8)/microsteps, (MIN_DELAY * 8)/microsteps);
+}
+
+void setPrecision(int precision) {
+    // Set microsteps
+    switch(precision) {
+        case 8:
+            // 8 microsteps
+            microsteps = 8;
+            digitalWrite(MS1, LOW);
+            digitalWrite(MS2, LOW);
+            break;
+        case 16:
+            // 16 microsteps
+            microsteps = 16;
+            digitalWrite(MS1, HIGH);
+            digitalWrite(MS2, HIGH);
+            break;
+        case 32:
+            // 32 microsteps
+            microsteps = 32;
+            digitalWrite(MS1, HIGH);
+            digitalWrite(MS2, LOW);
+            break;
+        case 64:
+            // 64 microsteps
+            microsteps = 64;
+            digitalWrite(MS1, LOW);
+            digitalWrite(MS2, HIGH);
+            break;
+        default:
+            // Default to 16 microsteps
+            microsteps = 16;
+            digitalWrite(MS1, HIGH);
+            digitalWrite(MS2, HIGH);
+            break;
+    }
+    stepsAngle = STEPS_ANGLE_DEFAULT / microsteps; // Number of degrees per step
+    stepsPerRev = 360 / stepsAngle;
+    setSpeed(10);
+    
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -180,7 +257,7 @@ int delayStepperMotor = 500; // Delay between steps in microseconds
 
 // SD card
 #define FILENAME "data.txt" // Name of file to save data to
-File dataFile; // File to save data to
+// File dataFile; // File to save data to
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -205,12 +282,21 @@ void setup() {
     setupHbridge();
 
     // Bluetooth
+    setupBluetooth();
+
+    // Stepper
+    setupStepper();
+
+    setPrecision(8);
+
+    setSpeed(10);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void loop() {
 
+    step(1);
     // Read data from the Bluetooth module
     while (SerialBT.available()) {
         char incomingByte = SerialBT.read(); 
