@@ -31,8 +31,8 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 
 #include "BluetoothSerial.h"
 #include <Wire.h>
-#include <Servo.h>
-#include <LIDARLite.h>
+// #include <Servo.h>
+// #include <LIDARLite.h>
 #include <SPI.h>
 // #include <SD.h>
 
@@ -149,7 +149,7 @@ void processCommand(String command) {
 
 // Servo
 
-Servo servo; // Create a servo object to control the pan-tilt mechanism
+// Servo servo; // Create a servo object to control the pan-tilt mechanism
 #define ANGLE_MIN 1000 // Minimum angle for servo in microseconds (0 degrees = 500 microseconds)
 #define ANGLE_MAX 1600 // Maximum angle for servo in microseconds (180 degrees = 2500 microseconds)
 #define ANGLE_MOY (ANGLE_MAX + ANGLE_MIN) / 2 // Middle angle for servo in microseconds
@@ -175,7 +175,7 @@ int microsteps = 16; // Number of microsteps per step
 double stepsAngle = STEPS_ANGLE_DEFAULT / microsteps; // Number of degrees per step
 int stepsPerRev = 360 / stepsAngle; // Number of steps per revolution
 #define MAX_DELAY 2000 // Maximum delay between steps in microseconds
-#define MIN_DELAY 500 // Minimum delay between steps in microseconds
+#define MIN_DELAY 170 // Minimum delay between steps in microseconds
 int delayStepperMotor = 500; // Delay between steps in microseconds
 
 void setupStepper() {
@@ -262,7 +262,7 @@ void setPrecision(int precision) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Lidar Lite v3
-LIDARLite myLidarLite;
+// LIDARLite myLidarLite;
 double cartesian[3]; // Cartesian coordinates
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -289,7 +289,7 @@ void setup() {
 
     setPrecision(8);
 
-    setSpeed(10);
+    setSpeed(100);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
