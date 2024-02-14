@@ -147,6 +147,34 @@ void processCommand(String command) {
     }
 }
 
+void BluetoothTask(void *pvParameters) {
+  for (;;) { // Boucle infinie de la tâche
+    // Lecture des données depuis le module Bluetooth
+    while (SerialBT.available()) {
+      char incomingByte = SerialBT.read();
+
+      // Vérification du début ou de la fin de la commande
+      if (incomingByte == '{') {
+        commandStarted = true;
+        incomingData = "";
+      } else if (incomingByte == '}' && commandStarted) {
+        commandStarted = false;
+        processCommand(incomingData);
+      } else if (commandStarted) {
+        incomingData += incomingByte;
+      }
+    }
+
+    // FailSafe en cas de perte de connexion
+    if (!SerialBT.connected(1000)) {
+      move(0,0); // Appel à une fonction de secours en cas de perte de connexion
+      Serial.println("Connection Lost. Failsafe activated.");
+    }
+
+    delay(10); // Léger délai pour éviter de surcharger le cœur
+  }
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -303,6 +331,16 @@ void setup() {
     setSpeed(100);
 
     setupLidar();
+ 
+    xTaskCreatePinnedToCore(
+        BluetoothTask,    // Fonction de la tâche
+        "BluetoothTask",  // Nom de la tâche
+        10000,            // Taille de la pile (en mots)
+        NULL,             // Paramètre de la tâche
+        1,                // Priorité de la tâche
+        NULL,             // Handle de la tâche
+        0                 // Cœur ciblé (0 ou 1)
+    );
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -310,27 +348,6 @@ void setup() {
 void loop() {
 
     step(1);
-    Serial.println(myLidarLite.distance());
-    // Read data from the Bluetooth module
-    while (SerialBT.available()) {
-        char incomingByte = SerialBT.read(); 
-
-        // Check if the command has started or ended
-        if (incomingByte == '{') {
-            commandStarted = true; 
-            incomingData = ""; 
-        }
-        else if (incomingByte == '}' && commandStarted) {
-            commandStarted = false; 
-            processCommand(incomingData); 
-        } 
-        else if (commandStarted) {
-            incomingData += incomingByte; 
-        }
-    }
-    // FailSafe if connection is lost
-    if (!SerialBT.connected(1000)) {
-        move(0,0);
-    }
+    
     
 }
