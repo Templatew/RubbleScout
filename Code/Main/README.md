@@ -40,9 +40,8 @@
 - **Writing the Code:** Write your code in the Arduino IDE, utilizing ESP32-specific functions for servomotors, Bluetooth communication, and SD card functionality as shown in your functions.
 - **Uploading to the ESP32:** Connect your ESP32 to the computer via USB, select the correct serial port under `Tools` > `Port`, and click the "Upload" button to send your code to the ESP32.
 
-#### Troubleshooting
+#### Troubleshooting**ection Issues:** If you encounter issues connecting the ESP32 to the Arduino IDE, ensure the correct USB driver is installed for your ESP32 module.
 
-- **Connection Issues:** If you encounter issues connecting the ESP32 to the Arduino IDE, ensure the correct USB driver is installed for your ESP32 module.
 - **Pin Usage:** Make sure to adhere to the ESP32 pin specifications, especially for special functionalities like SPI, I2C, UART, etc.
 
 #### Final Notes
