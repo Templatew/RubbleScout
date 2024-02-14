@@ -10,26 +10,36 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
         _\///________\///____\/////////____\/////////____\/////////____\/////////_____\//////////_____\///////////_________\////////______\/////_______\/////////________\/////____
 */  
 
-#include <Arduino.h>
-#include "Stepper.h"
-#include "LIDARLite.h"
 #include "HBridge.h"
+#include <Arduino.h>
 
 
+HBridge::HBridge(){}
 
-Stepper stepper;
-LIDARLite lidar;
-HBridge hbridge;
-
-
-
-void setup() {
-    Serial.begin(115200);
-    stepper.setup();
-    lidar.setup();
-    hbridge.setup();
+void HBridge::begin(){
+        pinMode(this->_DIR1, OUTPUT);
+        pinMode(this->_DIR2, OUTPUT);
+        ledcSetup(this->_LEDC_CHANNEL_0, this->_LEDC_BASE_FREQ, this->_LEDC_TIMER_8_BIT);
+        ledcSetup(this->_LEDC_CHANNEL_1, this->_LEDC_BASE_FREQ, this->_LEDC_TIMER_8_BIT);
+        ledcAttachPin(this->_PW1, _LEDC_CHANNEL_0);
+        ledcAttachPin(this->_PW2, _LEDC_CHANNEL_1);
 }
 
-void loop(){
-    stepper.step(1);
+void HBridge::move(int speedLeft, int speedRight){
+    if (speedRight < 0) {
+        digitalWrite(this->_DIR1, HIGH);
+    } 
+    else {
+        digitalWrite(this->_DIR1, LOW);
+    }
+
+    if (speedLeft < 0) {
+        digitalWrite(this->_DIR2, HIGH);
+    } 
+    else {
+        digitalWrite(_DIR2, LOW);
+    }
+
+    ledcWrite(this->_LEDC_CHANNEL_0, abs(speedRight));
+    ledcWrite(this->_LEDC_CHANNEL_1, abs(speedLeft));
 }

@@ -10,26 +10,32 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
         _\///________\///____\/////////____\/////////____\/////////____\/////////_____\//////////_____\///////////_________\////////______\/////_______\/////////________\/////____
 */  
 
+
+#ifndef HBRIDGE_H
+#define HBRIDGE_H
+
 #include <Arduino.h>
-#include "Stepper.h"
-#include "LIDARLite.h"
-#include "HBridge.h"
 
 
+class HBridge {
 
-Stepper stepper;
-LIDARLite lidar;
-HBridge hbridge;
+    public:
+        HBridge();
+        void begin();
+        void move(int speedLeft, int speedRight);
+         
+    private:
 
+        static const int _DIR1 = 15;
+        static const int _DIR2 = 16;
+        static const int _PWM1 = 4;
+        static const int _PWM2 = 17;
 
-
-void setup() {
-    Serial.begin(115200);
-    stepper.setup();
-    lidar.setup();
-    hbridge.setup();
+        static const int _LEDC_CHANNEL_0 = 0;
+        static const int _LEDC_CHANNEL_1 = 1;
+        static const int _LEDC_TIMER_8_BIT = 8;
+        int _LEDC_BASE_FREQ = 5000;
 }
 
-void loop(){
-    stepper.step(1);
-}
+
+#endif
