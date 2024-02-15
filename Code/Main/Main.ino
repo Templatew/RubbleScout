@@ -36,7 +36,7 @@ int ledPin = 2;
 void scanLidar(){
     
     stepper.setMicrosteps(8);
-    stepper.setSpeed(10);
+    stepper.setSpeed(30);
 
     // // Write something on sd card
     // sdcard.write("Hello World");
@@ -44,49 +44,50 @@ void scanLidar(){
     // sdcard.appendFile(SD, "/data.txt", "test");
     // // read the file
 
-    // double distance = 0;
-    // int thetaDeg = 0;
-    // double phiDeg = 0;
-    // double theta = 0;
-    // double phi = 0;
+    int distance = 0;
+    double phiDeg = 0;
+    double theta = 0;
+    double phi = 0;
     int stepsPerRev = stepper.getStepsPerRev();
     double stepsAngle = stepper.getStepsAngle();
-    // int cartesian[3];
-    // int spherical[3];
+    int stepSize = 16;
+    int servoPrecision = 4;
+    double cartesian[3];
+    double spherical[3];
+    String data = "";
+    sdcard.write("x, y, z\n");
+    
 
-    for (int thetaDeg = 45; thetaDeg <= 135; thetaDeg+=2){
+    for (int thetaDeg = 30; thetaDeg <= 160; thetaDeg+=servoPrecision){
 
-        
+        servo.setAngle(thetaDeg);
 
-        for (int steps = 0; steps < stepsPerRev; steps+=1){
-            servo.setAngle(thetaDeg);
-            stepper.step(1);
-            // delay(10);
-            // distance = lidar.distance();
+        for (int steps = 0; steps < stepsPerRev; steps+=stepSize){
+            
+            stepper.step(stepSize);
+            distance = lidar.distance();
+            delay(1);
 
-            // phiDeg = steps * stepsAngle;
-            // theta = servo.degreeToRadian(thetaDeg);
-            // phi = servo.degreeToRadian(phiDeg);
+            phiDeg = steps * stepsAngle;
+            theta = servo.degreeToRadian(thetaDeg);
+            phi = servo.degreeToRadian(phiDeg);
 
-            // spherical[0] = distance;
-            // spherical[1] = theta;
-            // spherical[2] = phi;
+            spherical[0] = distance;
+            spherical[1] = theta;
+            spherical[2] = phi;
 
 
             // Serial.println("Distance: " + String(distance) + " Theta: " + String(thetaDeg) + " Phi: " + String(phiDeg));
 
-            // servo.sphericalToCartesian(spherical, cartesian);
+            servo.sphericalToCartesian(spherical, cartesian);
 
             // Write to sd card the cartesian coordinates like so : x, y, z + /n
-            // sdcard.appendFile(SD, "/data.txt", String(cartesian[0]) + ", " + String(cartesian[1]) + ", " + String(cartesian[2]) + "\n");
-            // Serial.println(String(cartesian[0]) + ", " + String(cartesian[1]) + ", " + String(cartesian[2]));
+            data = String(cartesian[0]) + ", " + String(cartesian[1]) + ", " + String(cartesian[2]) + "\n";
+            sdcard.appendFile(SD, "/data.txt", data.c_str());
 
+            // Serial.println(data);
         }
-
     }
-
-
-
 }
 
 
@@ -167,21 +168,15 @@ void setup() {
 
     pinMode(ledPin,OUTPUT);
     
-
-    // // Write something on sd card
-    // sdcard.write("Hello World");
-    // // append to the file
-    // sdcard.appendFile(SD, "/data.txt", "test");
-    // // read the file
+    scanLidar();
+    
 
 }
 
 void loop(){
-    // scanLidar();
-    servo.setPulseWidth(500);
     
+    // scanLidar();
     // stepper.step(1);
-
     // move servo
     // for (int i = 0; i < 180; i++){
     //     servo.setAngle(i);

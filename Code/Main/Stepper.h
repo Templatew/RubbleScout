@@ -48,7 +48,7 @@ class Stepper{
         static const int _MS2 = 25;
         
         
-        static const int _MIN_DELAY = 170; // Minimum delay between steps in microseconds
+        static const int _MIN_DELAY = 400; // Minimum delay between steps in microseconds (very max 170)
         static const int _MAX_DELAY = 2000; // Maximum delay between steps in microseconds
         
         const double _STEP_ANGLE_DEFAULT = 1.8; // Number of degrees per step in default mode

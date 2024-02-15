@@ -30,7 +30,7 @@ public:
   double degreeToRadian(double degree);
   // double pulseWidthToAngle(int pulseWidth);
   // double angleToPulseWidth(double angle);
-  void sphericalToCartesian(int spherical[3], int cartesian[3]);
+  void sphericalToCartesian(double spherical[3], double cartesian[3]);
 
 private:
 
