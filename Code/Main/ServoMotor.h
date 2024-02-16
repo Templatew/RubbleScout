@@ -40,6 +40,7 @@ private:
   static const int _MAX_PULSE_WIDTH = 1600;
   static const int _MOY_PULSE_WIDTH = (_MIN_PULSE_WIDTH + _MAX_PULSE_WIDTH) / 2;
   static const int RANGE_PULSE_WIDTH = _MAX_PULSE_WIDTH - _MIN_PULSE_WIDTH;
+  static const int _SERVO_OFFSET_DEG = 10;
 
 
   int _angle = 0;

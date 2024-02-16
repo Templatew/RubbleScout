@@ -33,59 +33,93 @@ bool commandStarted = false;
 int ledPin = 2;
 
 
+// This fonction will receive the data from the lidar and save it in a file
+// It needs to convert degrees to radians
+// Then spherical to cartesian
+// Then save the data in a file
+void lidarTask(void *pvParameters) {
+    
+    
+    Serial.println(lidar.distance());
+    vTaskDelete(NULL); // Delete the task when finished scanning
+
+}
+
+
 void scanLidar(){
     
     stepper.setMicrosteps(8);
-    stepper.setSpeed(30);
-
-    // // Write something on sd card
-    // sdcard.write("Hello World");
-    // // append to the file
-    // sdcard.appendFile(SD, "/data.txt", "test");
-    // // read the file
-
-    int distance = 0;
+    stepper.setSpeed(100);
+    
     double phiDeg = 0;
+    int thetaMin = 60;
+    int thetaMax = 110;
+    int thetaDeg = thetaMin;
     double theta = 0;
     double phi = 0;
+
+    int steps = 0;
     int stepsPerRev = stepper.getStepsPerRev();
     double stepsAngle = stepper.getStepsAngle();
-    int stepSize = 16;
-    int servoPrecision = 4;
+
+
     double cartesian[3];
     double spherical[3];
     String data = "";
     sdcard.write("x, y, z\n");
-    
 
-    for (int thetaDeg = 30; thetaDeg <= 160; thetaDeg+=servoPrecision){
+    int distance = 0;
+    int refreshRate = 10; // 100 Hz max in normal or ~650 Hz max in high performance mode
+    double deltaT = 1000 / refreshRate;
+    unsigned long timer = millis();
 
-        servo.setAngle(thetaDeg);
+    servo.setAngle(thetaDeg);
 
-        for (int steps = 0; steps < stepsPerRev; steps+=stepSize){
+    while(thetaDeg<=thetaMax){
+
+        stepper.step(1);
+        steps++;
+
+        if (steps >= stepsPerRev){
+            steps = 0;
+            thetaDeg+=2;
+            servo.setAngle(thetaDeg);
+        }
+        unsigned long currentTime = millis();
+        if (currentTime - timer >= deltaT){
             
-            stepper.step(stepSize);
-            distance = lidar.distance();
-            delay(1);
+            xTaskCreatePinnedToCore(
+                lidarTask,   // Task function
+                "ScanLidar",     // Name of the task
+                10000,           // Stack size (adjust as needed)
+                NULL,            // Task input parameter
+                1,               // Priority of the task
+                NULL,            // Task handle
+                0                // Core where the task should run
+            );
+            // distance = lidar.distance();
+            // Serial.println(distance);
 
-            phiDeg = steps * stepsAngle;
-            theta = servo.degreeToRadian(thetaDeg);
-            phi = servo.degreeToRadian(phiDeg);
+            // if (distance < 1000){
+            //     phiDeg = steps * stepsAngle;
+            //     theta = servo.degreeToRadian(thetaDeg);
+            //     phi = servo.degreeToRadian(phiDeg);
 
-            spherical[0] = distance;
-            spherical[1] = theta;
-            spherical[2] = phi;
+            //     spherical[0] = distance;
+            //     spherical[1] = theta;
+            //     spherical[2] = phi;
 
+            //     // Serial.println(String(spherical[0]) + ", " + String(spherical[1]) + ", " + String(spherical[2]) + "\n");
 
-            // Serial.println("Distance: " + String(distance) + " Theta: " + String(thetaDeg) + " Phi: " + String(phiDeg));
+            //     servo.sphericalToCartesian(spherical, cartesian);
 
-            servo.sphericalToCartesian(spherical, cartesian);
-
-            // Write to sd card the cartesian coordinates like so : x, y, z + /n
-            data = String(cartesian[0]) + ", " + String(cartesian[1]) + ", " + String(cartesian[2]) + "\n";
-            sdcard.appendFile(SD, "/data.txt", data.c_str());
-
-            // Serial.println(data);
+            //     data = String(cartesian[0]) + ", " + String(cartesian[1]) + ", " + String(cartesian[2]) + "\n";
+            //     // Serial.println(data);
+                
+            //     sdcard.appendFile(SD, "/data.txt", data.c_str());
+            // }
+                
+            timer = millis();
         }
     }
 }
@@ -96,11 +130,7 @@ void processCommand(String command) {
     int lIndex = command.indexOf('L'); // Find the index of 'L'
 
     if (lIndex != -1) {
-        // String lStr = command.substring(lIndex+1);
-        // int l = lStr.toInt(); 
-        // lidar.begin(0, true);
-        // lidar.takeMeasurement();
-        // Serial.println(lidar.distance());
+        // Lidar
     }
 
 
@@ -156,36 +186,21 @@ void setup() {
 
     Serial.begin(115200);
     stepper.begin();
-    lidar.begin(0, true);
+    lidar.begin(2, true);
     hbridge.begin();
     sdcard.begin();
     servo.begin();
     BT.begin(deviceName);
     BT.setPin(pin);
 
-    // stepper.setMicrosteps(8);
-    // stepper.setSpeed(100);
-
     pinMode(ledPin,OUTPUT);
-    
-    scanLidar();
-    
 
+    // scanLidar();
 }
 
 void loop(){
     
-    // scanLidar();
-    // stepper.step(1);
-    // move servo
-    // for (int i = 0; i < 180; i++){
-    //     servo.setAngle(i);
-    //     delay(10);
-    // }
-    // hbridge.move(80,80);
-    // 
-    // stepper.step(1);
-    // Bluetooth();
-    // digitalWrite(ledPin,HIGH);
+    scanLidar();
+    
 
 }

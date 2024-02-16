@@ -18,13 +18,11 @@ ServoMotor::ServoMotor(){}
 
 void ServoMotor::begin(){
     this->_servo.setPeriodHertz(50);
-    this->_servo.attach(this->_SERVO_PIN, this->_MIN_PULSE_WIDTH, this->_MAX_PULSE_WIDTH);
+    this->_servo.attach(this->_SERVO_PIN);
 }
 
 void ServoMotor::setAngle(int angle){
-    this->_angle = angle;
-    // this->_pulseWidth = map(this->_angle, 0, 180, this->_MIN_PULSE_WIDTH, this->_MAX_PULSE_WIDTH);
-    // this->_servo.write(this->_pulseWidth);
+    this->_angle = angle - this->_SERVO_OFFSET_DEG;
     this->_servo.write(this->_angle);
 }
 
