@@ -64,19 +64,19 @@ void Stepper::setMicrosteps(int microsteps){
     }
     this->_stepsAngle = this->_STEP_ANGLE_DEFAULT / this->_microsteps;
     this->_stepsPerRev = 360 / this->_stepsAngle;
+    this->_delayStepperMotor = map(50, 0, 100, (this->_MAX_DELAY*8)/this->_microsteps, (this->_MIN_DELAY * 8)/this->_microsteps);
 }
 
-void Stepper::step(int steps){
-    if (steps > 0){
-        digitalWrite(this->_DIR, HIGH);
-    } else {
-        digitalWrite(this->_DIR, LOW);
-    }
-    for (int i = 0; i < abs(steps); i++){
-        digitalWrite(this->_STEP, HIGH);
-        delayMicroseconds(this->_delayStepperMotor);
-        digitalWrite(this->_STEP, LOW);
-        delayMicroseconds(this->_delayStepperMotor);
+void Stepper::step(){
+    digitalWrite(this->_DIR, HIGH);
+    digitalWrite(this->_STEP, HIGH);
+    delayMicroseconds(this->_delayStepperMotor);
+    digitalWrite(this->_STEP, LOW);
+    delayMicroseconds(this->_delayStepperMotor);
+
+    this->_currentStep++;
+    if(this->_currentStep == this->_stepsPerRev){
+        this->_currentStep = 0;
     }
 }
 
@@ -92,3 +92,6 @@ int Stepper::getStepsPerRev(){
     return this->_stepsPerRev;
 }
 
+double Stepper::getCurrentAngle(){
+    return this->_currentStep * this->_stepsAngle;
+}

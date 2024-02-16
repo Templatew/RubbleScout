@@ -26,31 +26,14 @@ void ServoMotor::setAngle(int angle){
     this->_servo.write(this->_angle);
 }
 
-void ServoMotor::setPulseWidth(int pulseWidth){
-    this->_pulseWidth = pulseWidth;
-    this->_angle = map(this->_pulseWidth, this->_MIN_PULSE_WIDTH, this->_MAX_PULSE_WIDTH, 0, 180);
-    this->_servo.write(this->_pulseWidth);
-}
-
-int ServoMotor::getAngle(){
+int ServoMotor::getCurrentAngle(){
     return this->_angle;
 }
 
-int ServoMotor::getPulseWidth(){
-    return this->_pulseWidth;
-}
 
 double ServoMotor::degreeToRadian(double degree){
     return degree * PI / 180;
 }
-
-// double ServoMotor::pulseWidthToAngle(int pulseWidth){
-//     return map(pulseWidth, 500, 2500, 0, 180);
-// }
-
-// double ServoMotor::angleToPulseWidth(double angle){
-//     return map(angle, 0, 180, 500, 2500);
-// }
 
 void ServoMotor::sphericalToCartesian(double spherical[3], double cartesian[3]){
     cartesian[0] = spherical[0] * sin(spherical[1]) * cos(spherical[2]);

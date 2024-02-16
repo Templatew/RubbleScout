@@ -33,12 +33,13 @@ class Stepper{
 
         Stepper();
         void begin();
-        void step(int steps);
+        void step();
         void setSpeed(int speed);
         void setMicrosteps(int microsteps);
         int getMicrosteps();
         double getStepsAngle();
         int getStepsPerRev();
+        double getCurrentAngle();
 
     private:
 
@@ -56,6 +57,7 @@ class Stepper{
         double _stepsAngle = _STEP_ANGLE_DEFAULT / _microsteps; // Number of degrees per step
         int _stepsPerRev = 360 / _stepsAngle; // Number of steps per revolution
         int _delayStepperMotor = _MIN_DELAY + _MAX_DELAY / 2; // Delay between steps in microseconds
+        int _currentStep = 0; // Current step
 };
 
 #endif

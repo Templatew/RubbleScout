@@ -25,26 +25,20 @@ public:
   void begin();
   void setAngle(int angle);
   void setPulseWidth(int pulseWidth);
-  int getAngle();
+  int getCurrentAngle();
   int getPulseWidth();
   double degreeToRadian(double degree);
-  // double pulseWidthToAngle(int pulseWidth);
-  // double angleToPulseWidth(double angle);
   void sphericalToCartesian(double spherical[3], double cartesian[3]);
+
+  static const int MAX_ANGLE = 110;
+  static const int MIN_ANGLE = 60;
 
 private:
 
   static const int _SERVO_PIN = 27;
-
-  static const int _MIN_PULSE_WIDTH = 1000;
-  static const int _MAX_PULSE_WIDTH = 1600;
-  static const int _MOY_PULSE_WIDTH = (_MIN_PULSE_WIDTH + _MAX_PULSE_WIDTH) / 2;
-  static const int RANGE_PULSE_WIDTH = _MAX_PULSE_WIDTH - _MIN_PULSE_WIDTH;
   static const int _SERVO_OFFSET_DEG = 10;
 
-
   int _angle = 0;
-  int _pulseWidth = 0;
   Servo _servo;
 };
 
