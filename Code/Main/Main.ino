@@ -52,7 +52,7 @@ TaskHandle_t measureTaskHandle;
 void ScanTask(void *pvParameters) {
     esp_task_wdt_delete(NULL);
     stepper.setMicrosteps(8);
-    stepper.setSpeed(25);
+    stepper.setSpeed(100);
     const int thetaMin = 50;
     const int thetaMax = 110;
     const int thetaStep = 1; // Angle de pas pour le servo
