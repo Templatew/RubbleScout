@@ -21,13 +21,21 @@ RubbleScout's software operates on a state machine with states such as Initializ
 ## Hardware & Software Architecture
 The robot features a modular architecture allowing for scalability and maintenance. The hardware includes motor drivers, power management, and sensor modules, while the software architecture is designed for real-time processing and modular updates.
 
+### Architecture
+- The robot's architecture comprises three primary layers:
+  - **Sensing Layer:** LiDAR, ultrasonic sensors, and cameras for environment perception.
+  - **Processing Layer:** NVIDIA Jetson Nano for high-level processing and ESP32 for low-level control and sensor integration.
+  - **Actuation Layer:** Electric motors for movement and a servo motor for LiDAR scanning.
+
 - [Link to Wiring Diagram](https://github.com/Templatew/RubbleScout/blob/main/Code/Main/README.md)
+
+### Code Overview
+The software is developed using C++ on the ESP-IDF framework for real-time operations and Python on the Jetson Nano for data processing and machine learning tasks.
+
 - [Link to Code Documentation](https://github.com/Templatew/RubbleScout/blob/main/Docs/Wiring/ESP32/Schematic_RubbleScout_2024-02-16.pdf)
 
 ## Usage of NVIDIA Jetson Nano
 The Jetson Nano is employed to process sensor data, implement machine learning algorithms for object recognition, and generate 3D maps that can be used for navigation and strategy planning in rescue missions.
-
-- [Link to Jetson Nano Utilization Details](Templatew/RubbleScout/Code/Main/README.md)
 
 ## Risk Assessment
 Identified risks include system malfunctions, electrical failures, and sensor inaccuracies. Mitigation strategies involve redundant design, rigorous testing, and real-time system monitoring.
