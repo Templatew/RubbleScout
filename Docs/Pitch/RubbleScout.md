@@ -27,12 +27,12 @@ The robot features a modular architecture allowing for scalability and maintenan
   - **Processing Layer:** NVIDIA Jetson Nano for high-level processing and ESP32 for low-level control and sensor integration.
   - **Actuation Layer:** Electric motors for movement and a servo motor for LiDAR scanning.
 
-- [Link to Wiring Diagram](https://github.com/Templatew/RubbleScout/blob/main/Code/Main/README.md)
+- [Link to Wiring Diagram](https://github.com/Templatew/RubbleScout/blob/main/Docs/Wiring/ESP32/Schematic_RubbleScout_2024-02-16.pdf)
 
 ### Code Overview
 The software is developed using C++ on the ESP-IDF framework for real-time operations and Python on the Jetson Nano for data processing and machine learning tasks.
 
-- [Link to Code Documentation](https://github.com/Templatew/RubbleScout/blob/main/Docs/Wiring/ESP32/Schematic_RubbleScout_2024-02-16.pdf)
+- [Link to Code Documentation](https://github.com/Templatew/RubbleScout/blob/main/Code/Main/README.md)
 
 ## Usage of NVIDIA Jetson Nano
 - The Jetson Nano serves as the brain of RubbleScout, responsible for processing sensor data, creating 3D maps of the environment, and executing autonomous navigation algorithms. Potential uses also include survivor detection via machine learning and integration with other IoT devices for expanded capabilities.
