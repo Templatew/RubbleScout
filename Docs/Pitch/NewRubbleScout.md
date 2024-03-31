@@ -21,7 +21,7 @@ RubbleScout's software operates on a state machine with states such as Initializ
 ## Hardware & Software Architecture
 The robot features a modular architecture allowing for scalability and maintenance. The hardware includes motor drivers, power management, and sensor modules, while the software architecture is designed for real-time processing and modular updates.
 
-- [Link to Wiring Diagram](Templatew/RubbleScout/Code/Main/README.md)
+- [Link to Wiring Diagram](#Templatew/RubbleScout/Code/Main/README.md)
 - [Link to Code Documentation](Templatew/RubbleScout/Code/Main/README.md)
 
 ## Usage of NVIDIA Jetson Nano
