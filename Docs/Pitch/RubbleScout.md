@@ -48,7 +48,6 @@ Identified risks include system malfunctions, electrical failures, and sensor in
 ## Supporting Materials
 - [Link to the Code Repository](https://github.com/Templatew/RubbleScout/tree/main/Code)
 - [Link to the Weekly Reports](https://github.com/Templatew/RubbleScout/tree/main/Docs/Weekly%20Reports)
-- [Link to the System Block Diagram](#)
 
 ## **Gallery**
 
