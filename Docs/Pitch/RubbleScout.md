@@ -36,3 +36,14 @@ More about the code [here](https://github.com/Templatew/RubbleScout/tree/main/Co
 
 
 ## **Gallery**
+
+https://github.com/Templatew/RubbleScout/assets/96289463/867a7651-68fa-45cb-8242-6cb173693c5a
+
+
+
+https://github.com/Templatew/RubbleScout/assets/96289463/f9fa39b1-5d0c-4065-bb0d-41c5539a41e1
+
+
+https://github.com/Templatew/RubbleScout/assets/96289463/a6dde0ae-bb52-4444-9256-39dd32141298
+
+
