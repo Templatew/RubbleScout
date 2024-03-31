@@ -21,8 +21,8 @@ RubbleScout's software operates on a state machine with states such as Initializ
 ## Hardware & Software Architecture
 The robot features a modular architecture allowing for scalability and maintenance. The hardware includes motor drivers, power management, and sensor modules, while the software architecture is designed for real-time processing and modular updates.
 
-- [Link to Wiring Diagram](Code/Main/README.md)
-- [Link to Code Documentation](Templatew/RubbleScout/Code/Main/README.md)
+- [Link to Wiring Diagram](https://github.com/Templatew/RubbleScout/blob/main/Code/Main/README.md)
+- [Link to Code Documentation](https://github.com/Templatew/RubbleScout/blob/main/Docs/Wiring/ESP32/Schematic_RubbleScout_2024-02-16.pdf)
 
 ## Usage of NVIDIA Jetson Nano
 The Jetson Nano is employed to process sensor data, implement machine learning algorithms for object recognition, and generate 3D maps that can be used for navigation and strategy planning in rescue missions.
@@ -38,7 +38,8 @@ Identified risks include system malfunctions, electrical failures, and sensor in
 - Implemented a new DC-DC converter to prevent power issues.
 
 ## Supporting Materials
-- [Link to the Code Repository](Templatew/RubbleScout/Code)
-- [Link to the System Block Diagram](#)0
+- [Link to the Code Repository](https://github.com/Templatew/RubbleScout/tree/main/Code)
+- [Link to the Weekly Reports](https://github.com/Templatew/RubbleScout/tree/main/Docs/Weekly%20Reports)
+- [Link to the System Block Diagram](#)
 
 *This presentation is for academic review purposes*
