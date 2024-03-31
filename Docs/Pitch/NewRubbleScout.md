@@ -35,7 +35,7 @@ The software is developed using C++ on the ESP-IDF framework for real-time opera
 - [Link to Code Documentation](https://github.com/Templatew/RubbleScout/blob/main/Docs/Wiring/ESP32/Schematic_RubbleScout_2024-02-16.pdf)
 
 ## Usage of NVIDIA Jetson Nano
-The Jetson Nano is employed to process sensor data, implement machine learning algorithms for object recognition, and generate 3D maps that can be used for navigation and strategy planning in rescue missions.
+- The Jetson Nano serves as the brain of RubbleScout, responsible for processing sensor data, creating 3D maps of the environment, and executing autonomous navigation algorithms. Potential uses also include survivor detection via machine learning and integration with other IoT devices for expanded capabilities.
 
 ## Risk Assessment
 Identified risks include system malfunctions, electrical failures, and sensor inaccuracies. Mitigation strategies involve redundant design, rigorous testing, and real-time system monitoring.
@@ -49,5 +49,13 @@ Identified risks include system malfunctions, electrical failures, and sensor in
 - [Link to the Code Repository](https://github.com/Templatew/RubbleScout/tree/main/Code)
 - [Link to the Weekly Reports](https://github.com/Templatew/RubbleScout/tree/main/Docs/Weekly%20Reports)
 - [Link to the System Block Diagram](#)
+
+## **Gallery**
+
+https://github.com/Templatew/RubbleScout/assets/96289463/867a7651-68fa-45cb-8242-6cb173693c5a
+
+https://github.com/Templatew/RubbleScout/assets/96289463/f9fa39b1-5d0c-4065-bb0d-41c5539a41e1
+
+https://github.com/Templatew/RubbleScout/assets/96289463/a6dde0ae-bb52-4444-9256-39dd32141298
 
 *This presentation is for academic review purposes*
