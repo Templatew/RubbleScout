@@ -1,3 +1,4 @@
+![e](https://github.com/Templatew/RubbleScout/assets/96289463/78a19e4e-31b0-42a9-b263-804721911812)
 # RubbleScout Project Overview
 
 ## Introduction
