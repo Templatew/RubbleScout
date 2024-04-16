@@ -33,3 +33,10 @@ Ensure the following connections are made according to the schema:
 - If necessary, use pull-up resistors on the SDA and SCL lines, and ensure any required level shifting between 3.3V and 5V logic levels is in place to protect your devices.
 
 After setting up the hardware according to the wiring schema, your system should be ready for a test run. Ensure you follow the instructions closely to avoid any damage to the components due to incorrect wiring or voltage levels.
+
+## Gallery
+
+
+https://github.com/Templatew/RubbleScout/assets/96289463/1811614b-35ff-42c6-a526-842b8b7e4687
+
+
