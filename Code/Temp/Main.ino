@@ -19,49 +19,6 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// H-Bridge
-
-#define DIR1 15  // GPIO pin for the right motor direction
-#define DIR2 16 // GPIO pin for the left motor direction
-#define PW1 4  // GPIO pin for the right motor speed
-#define PW2 17  // GPIO pin for the left motor speed
-
-#define LEDC_CHANNEL_3 3
-#define LEDC_CHANNEL_4 4
-#define LEDC_TIMER_8_BIT 8
-#define LEDC_BASE_FREQ 5000
-
-/**
- * @brief Set the direction and speed of the motors.
- * 
- * This function sets the direction and speed of the motors based on the input values.
- * If the speed is negative, the corresponding motor will rotate in the opposite direction.
- * 
- * @param speedLeft The desired speed for the left motor (-255 to 255).
- * @param speedRight The desired speed for the right motor (-255 to 255).
- */
-void move(int speedLeft, int speedRight) {
-    // Set the direction of the motors 
-    if (speedRight < 0) {
-        digitalWrite(DIR1, HIGH);
-    } 
-    else {
-        digitalWrite(DIR1, LOW);
-    }
-
-    if (speedLeft < 0) {
-        digitalWrite(DIR2, HIGH);
-    } 
-    else {
-        digitalWrite(DIR2, LOW);
-    }
-
-    ledcWrite(LEDC_CHANNEL_3, abs(speedRight));
-    ledcWrite(LEDC_CHANNEL_4, abs(speedLeft));
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // Bluetooth
 #include "BluetoothSerial.h"
 String deviceName = "ESP32-RubbleScout";
@@ -116,7 +73,7 @@ void processCommand(String command) {
         xTaskCreatePinnedToCore(ScanTask, "ScanTask", 2048, NULL, 1, NULL, 0);
     }
 
-    else if (fIndex != -1) {
+    if (fIndex != -1) {
         digitalWrite(PIN_LAMP, HIGH);
     }
     
@@ -124,7 +81,7 @@ void processCommand(String command) {
         digitalWrite(PIN_LAMP, LOW);
     }
     
-    else if (xIndex != -1 && yIndex != -1) {
+    if (xIndex != -1 && yIndex != -1) {
         
         String xStr = command.substring(xIndex+1, yIndex);
         String yStr = command.substring(yIndex+1);
@@ -175,23 +132,12 @@ void setup() {
     servo.begin();
     BT.begin(deviceName);
 
-    // H-Bridge
-    pinMode(DIR1, OUTPUT);
-    pinMode(DIR2, OUTPUT);
-
-    // PWM Setup
-    ledcSetup(LEDC_CHANNEL_3, LEDC_BASE_FREQ, LEDC_TIMER_8_BIT);
-    ledcSetup(LEDC_CHANNEL_4, LEDC_BASE_FREQ, LEDC_TIMER_8_BIT);
-    // Attach the channel to the GPIO to be controlled
-    ledcAttachPin(PW1, LEDC_CHANNEL_3);
-    ledcAttachPin(PW2, LEDC_CHANNEL_4);
-
     // Dans setup() avant de créer les tâches
     esp_task_wdt_init(1000, true); // Définis le timeout du WDT à 60 secondes
     
     // lamp
     pinMode(PIN_LAMP, OUTPUT);
-    }
+}
 
 void loop() {
 
@@ -214,7 +160,7 @@ void loop() {
     }
     // FailSafe if connection is lost
     if (!SerialBT.connected(1000)) {
-        move(0,0);
+        hbridge.move(0,0);
     }
     
 }
