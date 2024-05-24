@@ -104,7 +104,7 @@ void ScanTask(void *pvParameters) {
 void processCommand(String command) {
 
 
-    Serial.println(command);
+    // Serial.println(command);
     int lIndex = command.indexOf('L'); // Find the index of 'L'
     int fIndex = command.indexOf('F');
     int oIndex = command.indexOf('O');
