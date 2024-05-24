@@ -12,9 +12,7 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 
 #include <Arduino.h>
 #include "Stepper.h"
-#include "LIDARLite.h"
 #include "HBridge.h"
-#include "SDCard.h"
 #include "ServoMotor.h"
 #include "BluetoothSerial.h"
 #include <esp_task_wdt.h>
@@ -66,10 +64,7 @@ void move(int speedLeft, int speedRight) {
 
 // Bluetooth
 #include "BluetoothSerial.h"
-#define USE_PIN
-const char *pin = "1234"; // Change this to a more secure PIN.
 
-String device_name = "ESP32-BT-Slave";
 BluetoothSerial SerialBT;
 
 String incomingData = ""; 
@@ -83,22 +78,10 @@ ServoMotor servo;
 BluetoothSerial BT;
 
 String deviceName = "ESP32-RubbleScout";
-const char *pin = "123456";
-String incomingData = "";
-bool commandStarted = false;
-int ledPin = 2;
 
-struct SphericalData {
-    double distance;
-    double theta;
-    double phi;
-};
-
-// Déclaration des fonctions de tâche et de la queue
-QueueHandle_t dataQueue;
-
-// Handle (ou identifiant) pour MeasureTask
-TaskHandle_t measureTaskHandle;
+// Lamp
+int is_on = false;
+const int PIN_LAMP = 2;
 
 
 // Implémentation de la tâche de scan
@@ -111,67 +94,18 @@ void ScanTask(void *pvParameters) {
     const int thetaStep = 1; // Angle de pas pour le servo
     const double phiStep = stepper.getStepsAngle(); // Angle de pas pour le stepper
 
-    int refreshRate = 650; // Taux de rafraîchissement en Hz
-    const int64_t notificationInterval = 1000000 / refreshRate; // Intervalle en microsecondes
-    int64_t lastNotificationTime = esp_timer_get_time();
-
     for (int thetaDeg = thetaMin; thetaDeg <= thetaMax; thetaDeg += thetaStep) {
         servo.setAngle(thetaDeg);
 
         for (double phiDeg = 0; phiDeg < 360; phiDeg += phiStep) {
             stepper.step();
-
-            int64_t currentTime = esp_timer_get_time();
-            if (currentTime - lastNotificationTime >= notificationInterval) {
-                // Envoyer la notification
-                xTaskNotifyGive(measureTaskHandle);
-                lastNotificationTime = currentTime; // Mettre à jour le temps pour la dernière notification
-            }
         }
     }
     vTaskDelete(NULL); // Supprimer la tâche si le scan est terminé
 }
 
-void MeasureTask(void *pvParameters) {
-    SphericalData data; // Structure ou classe pour stocker les données sphériques
-    int maxRange = 1000; // Portée maximale en cm
 
-    for (;;) {
-        
-        if (ulTaskNotifyTake(pdTRUE, portMAX_DELAY)) {
 
-            data.distance = lidar.distance(); // Lire la distance
-            data.theta = servo.getCurrentAngle(); // Obtenir l'angle actuel du servo
-            data.phi = stepper.getCurrentAngle(); // Obtenir l'angle actuel du stepper
-
-            if (data.distance > 0 && data.distance < maxRange) {
-                // Stocker la mesure dans la queue pour la tâche d'écriture
-                xQueueSend(dataQueue, &data, portMAX_DELAY);
-            }
-        }
-    }
-}
-
-// Implémentation de la tâche d'écriture
-void WriteTask(void *pvParameters) {
-    esp_task_wdt_delete(NULL);
-    SphericalData data;
-    double cartesian[3];
-    double spherical[3];
-    String line = "";
-    sdcard.write("x, y, z\n");
-
-    for (;;) {
-        if (xQueueReceive(dataQueue, &data, portMAX_DELAY)) {
-            spherical[0] = data.distance;
-            spherical[1] = servo.degreeToRadian(data.theta);
-            spherical[2] = servo.degreeToRadian(data.phi);
-            servo.sphericalToCartesian(spherical, cartesian);
-            line = String(cartesian[0]) + ", " + String(cartesian[1]) + ", " + String(cartesian[2]) + "\n";
-            sdcard.appendFile(SD, "/data.txt", line.c_str());
-        }
-    }
-}
 
 
 void processCommand(String command) {
@@ -181,10 +115,20 @@ void processCommand(String command) {
     if (lIndex != -1) {
         // Création de la tâche de scan
         xTaskCreatePinnedToCore(ScanTask, "ScanTask", 2048, NULL, 1, NULL, 0);
+    }
 
-        xTaskCreatePinnedToCore(MeasureTask, "MeasureTask", 2048, NULL, 1, &measureTaskHandle, 0);
+    int fIndex = command.indeOf('F');
+    if (fIndex != -1) {
+        
+        if (is_on) {
+            digitalWrite(PIN_LAMP,HIGH);
+            is_on = true;
+        }
+        else {
+            digitalWrite(PIN_LAMP,LOW);
+            is_on = false;
+        }
 
-        xTaskCreatePinnedToCore(WriteTask, "WriteTask", 10000, NULL, 1, NULL, 1);
     }
 
 
@@ -267,13 +211,9 @@ void setup() {
 
     // Dans setup() avant de créer les tâches
     esp_task_wdt_init(1000, true); // Définis le timeout du WDT à 60 secondes
-
-    // // Création de la tâche de scan
-    // xTaskCreatePinnedToCore(ScanTask, "ScanTask", 2048, NULL, 1, NULL, 0);
-
-    // xTaskCreatePinnedToCore(MeasureTask, "MeasureTask", 2048, NULL, 1, &measureTaskHandle, 0);
-
-    // xTaskCreatePinnedToCore(WriteTask, "WriteTask", 10000, NULL, 1, NULL, 1);
+    
+    // lamp
+    pinMode(PIN_LAMP, OUTPUT);
     }
 
 void loop() {
