@@ -26,8 +26,8 @@ ____/\\\\\\\\\______________________/\\\__________/\\\__________/\\\\\\_________
 #define PW1 4  // GPIO pin for the right motor speed
 #define PW2 17  // GPIO pin for the left motor speed
 
-#define LEDC_CHANNEL_0 0
-#define LEDC_CHANNEL_1 1
+#define LEDC_CHANNEL_3 3
+#define LEDC_CHANNEL_4 4
 #define LEDC_TIMER_8_BIT 8
 #define LEDC_BASE_FREQ 5000
 
@@ -56,31 +56,27 @@ void move(int speedLeft, int speedRight) {
         digitalWrite(DIR2, LOW);
     }
 
-    ledcWrite(LEDC_CHANNEL_0, abs(speedRight));
-    ledcWrite(LEDC_CHANNEL_1, abs(speedLeft));
+    ledcWrite(LEDC_CHANNEL_3, abs(speedRight));
+    ledcWrite(LEDC_CHANNEL_4, abs(speedLeft));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Bluetooth
 #include "BluetoothSerial.h"
-
+String deviceName = "ESP32-RubbleScout";
 BluetoothSerial SerialBT;
 
 String incomingData = ""; 
 bool commandStarted = false; 
 
 Stepper stepper;
-LIDARLite lidar;
 HBridge hbridge;
-SDCard sdcard;
 ServoMotor servo;
 BluetoothSerial BT;
 
-String deviceName = "ESP32-RubbleScout";
 
 // Lamp
-int is_on = false;
 const int PIN_LAMP = 2;
 
 
@@ -105,37 +101,30 @@ void ScanTask(void *pvParameters) {
 }
 
 
-
-
-
 void processCommand(String command) {
 
+
+    Serial.println(command);
     int lIndex = command.indexOf('L'); // Find the index of 'L'
+    int fIndex = command.indexOf('F');
+    int oIndex = command.indexOf('O');
+    int xIndex = command.indexOf('X'); // Find the index of 'X'
+    int yIndex = command.indexOf('Y'); // Find the index of 'Y'
 
     if (lIndex != -1) {
         // Création de la tâche de scan
         xTaskCreatePinnedToCore(ScanTask, "ScanTask", 2048, NULL, 1, NULL, 0);
     }
 
-    int fIndex = command.indeOf('F');
-    if (fIndex != -1) {
-        
-        if (is_on) {
-            digitalWrite(PIN_LAMP,HIGH);
-            is_on = true;
-        }
-        else {
-            digitalWrite(PIN_LAMP,LOW);
-            is_on = false;
-        }
-
+    else if (fIndex != -1) {
+        digitalWrite(PIN_LAMP, HIGH);
     }
-
-
-    int xIndex = command.indexOf('X'); // Find the index of 'X'
-    int yIndex = command.indexOf('Y'); // Find the index of 'Y'
     
-    if (xIndex != -1 && yIndex != -1) {
+    else if (oIndex != -1) {
+        digitalWrite(PIN_LAMP, LOW);
+    }
+    
+    else if (xIndex != -1 && yIndex != -1) {
         
         String xStr = command.substring(xIndex+1, yIndex);
         String yStr = command.substring(yIndex+1);
@@ -178,36 +167,24 @@ void Bluetooth(){
     }
 }
 
-
-
 void setup() {
 
     Serial.begin(115200);
     stepper.begin();
-    lidar.begin(1, true);
     hbridge.begin();
-    sdcard.begin();
     servo.begin();
     BT.begin(deviceName);
-    BT.setPin(pin);
 
-    // pinMode(ledPin,OUTPUT);
-
-    dataQueue = xQueueCreate(10, sizeof(SphericalData)); // Ajustez la taille de la queue selon vos besoins
-
-    // Bluetooth
-    SerialBT.begin(device_name); // Bluetooth device name
-    Serial.printf("The device with name \"%s\" is started.\nNow you can pair it with Bluetooth!\n", device_name.c_str());
     // H-Bridge
     pinMode(DIR1, OUTPUT);
     pinMode(DIR2, OUTPUT);
 
     // PWM Setup
-    ledcSetup(LEDC_CHANNEL_0, LEDC_BASE_FREQ, LEDC_TIMER_8_BIT);
-    ledcSetup(LEDC_CHANNEL_1, LEDC_BASE_FREQ, LEDC_TIMER_8_BIT);
+    ledcSetup(LEDC_CHANNEL_3, LEDC_BASE_FREQ, LEDC_TIMER_8_BIT);
+    ledcSetup(LEDC_CHANNEL_4, LEDC_BASE_FREQ, LEDC_TIMER_8_BIT);
     // Attach the channel to the GPIO to be controlled
-    ledcAttachPin(PW1, LEDC_CHANNEL_0);
-    ledcAttachPin(PW2, LEDC_CHANNEL_1);
+    ledcAttachPin(PW1, LEDC_CHANNEL_3);
+    ledcAttachPin(PW2, LEDC_CHANNEL_4);
 
     // Dans setup() avant de créer les tâches
     esp_task_wdt_init(1000, true); // Définis le timeout du WDT à 60 secondes
