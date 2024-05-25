@@ -19,10 +19,10 @@ HBridge::HBridge(){}
 void HBridge::begin(){
         pinMode(this->_DIR1, OUTPUT);
         pinMode(this->_DIR2, OUTPUT);
-        ledcSetup(this->_LEDC_CHANNEL_1, this->_LEDC_BASE_FREQ, this->_LEDC_TIMER_8_BIT);
-        ledcSetup(this->_LEDC_CHANNEL_2, this->_LEDC_BASE_FREQ, this->_LEDC_TIMER_8_BIT);
-        ledcAttachPin(this->_PWM1, _LEDC_CHANNEL_1);
-        ledcAttachPin(this->_PWM2, _LEDC_CHANNEL_2);
+        ledcSetup(this->_LEDC_CHANNEL_3, this->_LEDC_BASE_FREQ, this->_LEDC_TIMER_8_BIT);
+        ledcSetup(this->_LEDC_CHANNEL_4, this->_LEDC_BASE_FREQ, this->_LEDC_TIMER_8_BIT);
+        ledcAttachPin(this->_PWM1, _LEDC_CHANNEL_3);
+        ledcAttachPin(this->_PWM2, _LEDC_CHANNEL_4);
 }
 
 void HBridge::move(int speedLeft, int speedRight){
@@ -40,6 +40,6 @@ void HBridge::move(int speedLeft, int speedRight){
         digitalWrite(_DIR2, LOW);
     }
 
-    ledcWrite(this->_LEDC_CHANNEL_1, abs(speedRight));
-    ledcWrite(this->_LEDC_CHANNEL_2, abs(speedLeft));
+    ledcWrite(this->_LEDC_CHANNEL_3, abs(speedRight));
+    ledcWrite(this->_LEDC_CHANNEL_4, abs(speedLeft));
 }

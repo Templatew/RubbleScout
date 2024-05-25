@@ -31,8 +31,8 @@ class HBridge {
         static const int _PWM1 = 4;
         static const int _PWM2 = 17;
 
-        static const int _LEDC_CHANNEL_1 = 1;
-        static const int _LEDC_CHANNEL_2 = 2;
+        static const int _LEDC_CHANNEL_3 = 3;
+        static const int _LEDC_CHANNEL_4 = 4;
         static const int _LEDC_TIMER_8_BIT = 8;
         int _LEDC_BASE_FREQ = 5000;
 };
