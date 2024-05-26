@@ -26,12 +26,15 @@ Curious about our journey so far? Our weekly progress reports provide a detailed
 
 ## Gallery
 
+![_ANA2206-Enhanced-NR](https://github.com/Templatew/RubbleScout/assets/96289463/67c7b737-274d-427e-b925-bb0a3e7f6b94)
+![_ANA2205-Enhanced-NR](https://github.com/Templatew/RubbleScout/assets/96289463/f1961649-e31f-41e6-a3cf-8d939e31c39a)
+![_ANA2209-Enhanced-NR](https://github.com/Templatew/RubbleScout/assets/96289463/70f0e853-9d22-4ceb-b1ee-a33c04ef1b1e)
+
 
 https://github.com/Templatew/RubbleScout/assets/96289463/bee6238e-e7e7-48c2-96d8-582445407fb2
 
 
 
-![RubbleScout](https://github.com/Templatew/RubbleScout/assets/96289463/006c51f4-1f8c-4e0a-a2cd-6f67d0483f74)
 
 
 
