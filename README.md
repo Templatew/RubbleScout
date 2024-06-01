@@ -6,7 +6,7 @@
 
 ## Welcome to the Future of Search and Rescue
 
-RubbleScout isn't just a robot; it's a beacon of hope and innovation in the realm of search and rescue missions. Developed as part of our school project in Antibes, RubbleScout is rapidly evolving from a concept to a tangible agent of change in emergency response.
+RubbleScout is a semi-autonomous robot designed to enhance search and rescue operations in disaster-stricken environments by utilizing advanced detection and navigation technologies.
 
 ## Project Overview
 
