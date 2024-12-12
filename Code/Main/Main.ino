@@ -198,12 +198,14 @@ void setup() {
     // Dans setup() avant de créer les tâches
     esp_task_wdt_init(1000, true); // Définis le timeout du WDT à 60 secondes
 
+    vTaskSuspendAll();
     // Création de la tâche de scan
     xTaskCreatePinnedToCore(ScanTask, "ScanTask", 2048, NULL, 1, NULL, 0);
 
     xTaskCreatePinnedToCore(MeasureTask, "MeasureTask", 2048, NULL, 1, &measureTaskHandle, 0);
 
     xTaskCreatePinnedToCore(WriteTask, "WriteTask", 10000, NULL, 1, NULL, 1);
+    xTaskResumeAll();
     }
 
 void loop(){ 
