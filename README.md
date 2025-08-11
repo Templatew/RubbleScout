@@ -36,7 +36,7 @@ Curious about our journey so far? Our weekly progress reports provide a detailed
 
 https://github.com/Templatew/RubbleScout/assets/96289463/7052bb44-568c-42eb-913e-73d9d9e173d0
 
-https://github.com/Templatew/RubbleScout/assets/96289463/bee6238e-e7e7-48c2-96d8-582445407fb2
+
 
 
 
