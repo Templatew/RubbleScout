@@ -10,19 +10,7 @@ RubbleScout is a semi-autonomous robot designed to enhance search and rescue ope
 
 ## Project Overview
 
-At this stage, RubbleScout is taking shape both in theory and in practice. Our goal is ambitious yet achievable: to engineer a robot that masters tough terrains, harnesses cutting-edge technology for navigation and safety, and becomes an indispensable asset in rescue missions.
-
-## Literature Review and Research Insights
-
-Our journey began with a deep dive into the existing literature, where we explored the nuances of robotic design, particularly in the context of search and rescue operations.
-
-* [Explore our comprehensive Literature Review here](https://github.com/Templatew/RubbleScout/blob/main/Docs/Literature%20Review/Literature-Review-for-RubbleScout.pdf)
-
-## Progress Reports
-
-Curious about our journey so far? Our weekly progress reports provide a detailed account of our development process, challenges encountered, and breakthroughs.
-
-* [Access our weekly progress reports here](https://github.com/Templatew/RubbleScout/tree/main/Docs/Weekly%20Reports)
+At this stage, RubbleScout is taking shape both in theory and in practice. 
 
 ## Gallery
 
